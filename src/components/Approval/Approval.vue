@@ -39,6 +39,10 @@
                 <mu-th>订单编号</mu-th>
                 <mu-th>订单类型</mu-th>
                 <mu-th>出行人</mu-th>
+                <mu-th>是否违规</mu-th>
+                <mu-th>订单金额</mu-th>
+                <mu-th>员工支付金额</mu-th>
+                <mu-th>操作</mu-th>
               </mu-tr>
             </mu-thead>
             <mu-tbody>
@@ -46,22 +50,72 @@
                 <mu-td>10001</mu-td>
                 <mu-td>机票订单</mu-td>
                 <mu-td>张三</mu-td>
+                <mu-td>是</mu-td>
+                <mu-td>2000</mu-td>
+                <mu-td>200</mu-td>
+                <mu-td>
+                  <a>查看详情</a><br>
+                  <a> 通过</a><br>
+                  <a>驳回</a><br>
+                </mu-td>
               </mu-tr>
               <mu-tr>
                 <mu-td>20002</mu-td>
                 <mu-td>机票订单</mu-td>
                 <mu-td>王老五</mu-td>
+                <mu-td>否</mu-td>
+                <mu-td>2000</mu-td>
+                <mu-td>200</mu-td>
+                <mu-td> <a>查看详情</a><br>
+                  <a> 通过</a><br>
+                  <a>驳回</a><br></mu-td>
               </mu-tr>
               <mu-tr>
                 <mu-td>30002</mu-td>
                 <mu-td>酒店订单</mu-td>
                 <mu-td>李小二</mu-td>
+                <mu-td>是</mu-td>
+                <mu-td>2000</mu-td>
+                <mu-td>200</mu-td>
+                <mu-td> <a>查看详情</a><br>
+                  <a> 通过</a><br>
+                  <a>驳回</a><br></mu-td>
               </mu-tr>
               <mu-tr>
                 <mu-td>40004</mu-td>
                 <mu-td>酒店订单</mu-td>
                 <mu-td>张晓</mu-td>
+                <mu-td>是</mu-td>
+                <mu-td>2000</mu-td>
+                <mu-td>200</mu-td>
+                <mu-td> <a>查看详情</a><br>
+                  <a> 通过</a><br>
+                  <a>驳回</a><br></mu-td>
               </mu-tr>
+              <mu-tr>
+                <mu-td>40004</mu-td>
+                <mu-td>酒店订单</mu-td>
+                <mu-td>张晓</mu-td>
+                <mu-td>是</mu-td>
+                <mu-td>2000</mu-td>
+                <mu-td>200</mu-td>
+                <mu-td> <a>查看详情</a><br>
+                  <a> 通过</a><br>
+                  <a>驳回</a><br></mu-td>
+              </mu-tr>
+              <mu-tr>
+                <mu-td>40004</mu-td>
+                <mu-td>酒店订单</mu-td>
+                <mu-td>张晓</mu-td>
+                <mu-td>是</mu-td>
+                <mu-td>2000</mu-td>
+                <mu-td>200</mu-td>
+                <mu-td> <a>查看详情</a><br>
+                  <a> 通过</a><br>
+                  <a>驳回</a><br></mu-td>
+              </mu-tr>
+
+
             </mu-tbody>
           </mu-table>
         </div>
@@ -124,7 +178,7 @@
         width: 100%;
         height: auto;
 
-        .xiangqing{
+        .xiangqing {
           width: 900px;
         }
       }
