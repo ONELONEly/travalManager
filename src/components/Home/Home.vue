@@ -29,10 +29,14 @@
         }]
       }
     },
+    created(){
+      this.$http.post('/travalManager/loginStatus').then( (res) => {
+        this.$store.commit('setLoginUser',res.data.data);
+      });
+    },
     // 方法
     methods: {
       toPath(path) {
-
         if (path == '企业管理')
         {
           this.$router.push('/home/company')
