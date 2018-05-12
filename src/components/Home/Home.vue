@@ -81,6 +81,7 @@
     .home_bar {
       background-color: transparent;
       .home_head {
+        margin: 0 20px;
         height: 30px;
         width: 30px;
       }

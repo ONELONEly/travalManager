@@ -2,7 +2,6 @@
   <div id="approval">
     <mu-breadcrumb class="breadcrumb">
       <mu-breadcrumb-item href="javascript:void(0)">
-        <mu-icon value="home" :size="16"/>
         首页
       </mu-breadcrumb-item>
       <mu-breadcrumb-item href="javascript:void(0)">审批管理</mu-breadcrumb-item>
@@ -196,11 +195,6 @@
         }
       }
 
-    }
-
-    .breadcrumb {
-      margin: 30px 50px;
-      width: 100%;
     }
 
     .mu-breadcrumb-item-link {
