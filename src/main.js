@@ -8,13 +8,19 @@ import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 import 'muse-ui/dist/theme-light.css'
 import axios from 'axios'
+import qs from 'qs'
 
 Vue.config.productionTip = false
 
 // 添加muse-ui
 Vue.use(MuseUI)
 // 添加axios
-Vue.prototype.$http = axios
+Vue.prototype.$http = axios.create({
+  baseURL: 'http://www.kellyj.top:8080/',
+  withCredentials: true,
+  headers: {'Access-Control-Allow-Origin': '*','Access-Control-Allow-Credentials': 'true'}
+});
+Vue.prototype.$qs = qs
 
 /* eslint-disable no-new */
 new Vue({
