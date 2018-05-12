@@ -20,6 +20,7 @@
     position: fixed;
     height: 100%;
     width: 100%;
+    min-width:1366px;
   }
 
   body {
@@ -27,5 +28,6 @@
     margin: 0;
     height: 100%;
     width: 100%;
+    min-width:1200px;
   }
 </style>
