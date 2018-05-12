@@ -5,7 +5,7 @@
       <mu-breadcrumb-item href="javascript:void(0)">
         首页
       </mu-breadcrumb-item>
-      <mu-breadcrumb-item href="javascript:void(0)">出行预定</mu-breadcrumb-item>
+      <mu-breadcrumb-item href="javascript:void(0)">出行预订</mu-breadcrumb-item>
     </mu-breadcrumb>
     <!--主干区域-->
     <div class="buy_main">
@@ -58,10 +58,11 @@
                   <mu-col width="25" tablet="25" desktop="25">
                   </mu-col>
                   <mu-col width="75" tablet="75" desktop="75">
-                    <mu-raised-button label="搜索" primary/>
+                    <mu-raised-button label="搜索" primary @click="$router.push('/home/plane-ticket')"/>
                   </mu-col>
                 </mu-row>
               </div>
+              <!--酒店-->
               <div v-if="product_search_tab_select === 'hotel'">
                 <!--公私-->
                 <mu-row class="product_search_item" gutter>
