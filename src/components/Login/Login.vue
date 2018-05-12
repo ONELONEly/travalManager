@@ -43,17 +43,13 @@ export default {
           username: this.username,
           password: this.password
         });
-        this.$http.post("/cmx2/loginCheck", postData).then(function (res) {
+        this.$http.post("/travalManager/loginCheck", postData).then(function (res) {
           if (res.data.data) {
-            this.msg = '登陆成功';
-//            this.$router.push('/home');
+            this.msg = '';
+            this.$router.push('/home');
           } else {
             this.msg = "密码错误";
           }
-        }.bind(this));
-
-        this.$http.post("/cmx2/user/queryAlwaysUser").then(function (res) {
-          console.log(res.data);
         }.bind(this));
 
       }
