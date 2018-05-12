@@ -21,9 +21,14 @@ export default new Router({
           redirect: "buy"
         },
         {
-       path: 'buy',
+          path: 'buy',
           name: 'buy',
           component: require('@/components/Buy/Buy').default
+        },
+        {
+          path: 'plane-ticket',
+          name: 'plane-ticket',
+          component: require('@/components/PlaneTicket/PlaneTicket').default
         },
         {
           path: 'company',
