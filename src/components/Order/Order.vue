@@ -37,33 +37,42 @@
         </div>
 
         <div class="order_table">
-          <table class="order_table_content">
-            <thead class="order_table_head">
-            <tr>
-              <td>订单号</td>
-              <td>订单信息</td>
-              <td>订单类型</td>
-              <td>出行人</td>
-              <td>出发时间</td>
-              <td>金额</td>
-              <td>审核状态</td>
-              <td>操作</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>1</td>
-              <td>1</td>
-              <td>2</td>
-              <td>1</td>
-              <td>2</td>
-              <td>1</td>
-              <td>2</td>
-              <td>2</td>
-            </tr>
-            </tbody>
+          <mu-table :fixedFooter="fixedFooter" :fixedHeader="fixedHeader" :height="height"
+                    :enableSelectAll="enableSelectAll" :multiSelectable="multiSelectable"
+                    :selectable="selectable" :showCheckbox="showCheckbox">
+            <mu-thead slot="header">
+              <mu-tr>
+                <mu-th tooltip="ID">订单号</mu-th>
+                <mu-th tooltip="type">产品类型</mu-th>
+                <mu-th tooltip="start_time">开始时间</mu-th>
+                <mu-th tooltip="end_time">结束时间</mu-th>
+                <mu-th tooltip="start_city">出发城市</mu-th>
+                <mu-th tooltip="dest_city">到达城市</mu-th>
+                <mu-th tooltip="user">出行人</mu-th>
+                <mu-th tooltip="price">价格</mu-th>
+                <mu-th tooltip="state">状态</mu-th>
+                <mu-th tooltip="operation">操作</mu-th>
 
-          </table>
+
+              </mu-tr>
+            </mu-thead>
+            <mu-tbody>
+              <mu-tr v-for="item,index in tableData" :key="index" :selected="item.selected">
+                <mu-td>{{index + 1}}</mu-td>
+                <mu-td>{{item.type}}</mu-td>
+                <mu-td><div class="sst">{{item.start_time}}</div></mu-td>
+                <mu-td><div class="sst">{{item.end_time}}</div></mu-td>
+                <mu-td>{{item.start_city}}</mu-td>
+                <mu-td>{{item.dest_city}}</mu-td>
+                <mu-td>{{item.user}}</mu-td>
+                <mu-td>{{item.price}}</mu-td>
+                <mu-td>{{item.state}}</mu-td>
+                <mu-td>{{item.operation}}</mu-td>
+
+              </mu-tr>
+            </mu-tbody>
+          </mu-table>
+
         </div>
 
       </div>
@@ -77,9 +86,46 @@
   export default {
     data() {
       return {
-        value: '1'
+        value: '1',
+        tableData: [
+          {
+            type: '机票',
+            start_time: '2017-01-02',
+            end_time: '2017-02-01',
+            start_city: '成都',
+            dest_city: '上海',
+            user: '张三',
+            price: '2000',
+            state:'已通过',
+            operation:''
+
+          },
+          {
+            type: '酒店',
+            start_time: '2017-01-02 ',
+            end_time: '2017-02-01 ',
+            start_city: '成都',
+            dest_city: '上海',
+            user: '张三',
+            price: '400',
+            state:'已取消',
+            operation:''
+
+          },
+
+
+        ],
+        fixedHeader: true,
+        fixedFooter: false,
+        selectable: true,
+        multiSelectable: true,
+        enableSelectAll: false,
+        showCheckbox: false,
+        height: '300px'
       }
+
     },
+
     methods: {
       handleChange(value) {
         this.value = value
@@ -158,19 +204,21 @@
         .order_table {
           width: 100%;
           height: auto;
-          margin-left: 20px;
-          .order_table_content {
-            width: 900px;
-            .order_table_head{
-              line-height: 30px;
-              background-color: #2196f3;
-              color: white;
 
-            }
+          .demo-table-settings {
+            width: 200px;
+            overflow: hidden;
+            margin: 20px auto 0px;
           }
         }
       }
+.sst{
+  word-wrap:break-word ;
+  word-break:break-all ;
+  height: auto;
+  width: 40px;
+}
     }
-
   }
+
 </style>
