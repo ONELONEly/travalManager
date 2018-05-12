@@ -1,5 +1,7 @@
 <template>
-  <div>出行预定</div>
+  <div >
+出行预定
+  </div>
 </template>
 
 <script>
@@ -8,6 +10,6 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss">
 
 </style>
