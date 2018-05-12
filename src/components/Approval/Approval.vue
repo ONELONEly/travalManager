@@ -38,7 +38,7 @@
                       :selectable="selectable" :showCheckbox="showCheckbox">
               <mu-thead slot="header">
                 <mu-tr>
-                  <mu-th tooltip="ID">订单号</mu-th>
+                  <mu-th tooltip="approval_ID">订单号</mu-th>
                   <mu-th tooltip="type">产品类型</mu-th>
                   <mu-th tooltip="start_time">开始时间</mu-th>
                   <mu-th tooltip="end_time">结束时间</mu-th>
@@ -54,7 +54,7 @@
               </mu-thead>
               <mu-tbody>
                 <mu-tr v-for="item,index in tableData" :key="index" :selected="item.selected">
-                  <mu-td>{{index + 1}}</mu-td>
+                  <mu-td>{{ item.approval_ID}}</mu-td>
                   <mu-td>{{item.type}}</mu-td>
                   <mu-td><div class="sst">{{item.start_time}}</div></mu-td>
                   <mu-td><div class="sst">{{item.end_time}}</div></mu-td>
@@ -87,6 +87,7 @@
         value: '1',
         tableData: [
           {
+            approval_ID:'134542213',
             type: '机票',
             start_time: '2017-01-02',
             end_time: '2017-02-01',
@@ -99,6 +100,7 @@
 
           },
           {
+            approval_ID:'134542215',
             type: '酒店',
             start_time: '2017-01-02 ',
             end_time: '2017-02-01 ',

@@ -59,7 +59,7 @@
           </mu-thead>
           <mu-tbody>
             <mu-tr v-for="item,index in tableData" :key="index" :selected="item.selected">
-              <mu-td>{{index + 1}}</mu-td>
+              <mu-td>{{item.user_ID}}</mu-td>
               <mu-td>{{item.user_name}}</mu-td>
               <mu-td>{{item.user_sex}}</mu-td>
               <mu-td>{{item.department}}</mu-td>
@@ -87,6 +87,7 @@
         value: '1',
         tableData: [
           {
+            user_ID:'2139812',
             user_name: '张晓梅',
             user_sex: '女',
             department: '销售部',
@@ -98,6 +99,7 @@
 
           },
           {
+            user_ID:'2139813',
             user_name: '张聪',
             user_sex: '男',
             department: '技术部',
