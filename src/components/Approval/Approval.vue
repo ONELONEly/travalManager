@@ -1,11 +1,11 @@
 <template>
   <div id="approval">
     <mu-breadcrumb class="breadcrumb">
-      <mu-breadcrumb-item href="/">
+      <mu-breadcrumb-item href="javascript:void(0)">
         <mu-icon value="home" :size="16"/>
         首页
       </mu-breadcrumb-item>
-      <mu-breadcrumb-item href="/">审批管理</mu-breadcrumb-item>
+      <mu-breadcrumb-item href="javascript:void(0)">审批管理</mu-breadcrumb-item>
     </mu-breadcrumb>
 
     <div class="box">
