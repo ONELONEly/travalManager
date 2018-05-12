@@ -120,7 +120,7 @@
           <div class="buy_main_box_header">
             我的申请
             <span class="buy_main_box_header_right">
-              <a href="javascript:void(0)" @click="$router.push('/home/company')">{{moreText}}</a>
+              <a href="javascript:void(0)" @click="$router.push('/home/order')">{{moreText}}</a>
             </span>
           </div>
           <!--列表-->
