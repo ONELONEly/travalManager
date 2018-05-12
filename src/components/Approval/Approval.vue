@@ -31,97 +31,50 @@
 
           <mu-raised-button label="搜索" class="demo-raised-button" 搜索/>
         </div>
-        <div class="table">
-          <mu-table  class="xiangqing" multiSelectable enableSelectAll ref="table">
-            <mu-thead>
-              <mu-tr>
-                <mu-th>订单编号</mu-th>
-                <mu-th>订单类型</mu-th>
-                <mu-th>出行人</mu-th>
-                <mu-th>是否违规</mu-th>
-                <mu-th>订单金额</mu-th>
-                <mu-th>员工支付金额</mu-th>
-                <mu-th>操作</mu-th>
-              </mu-tr>
-            </mu-thead>
-            <mu-tbody>
-              <mu-tr>
-                <mu-td>10001</mu-td>
-                <mu-td>机票订单</mu-td>
-                <mu-td>张三</mu-td>
-                <mu-td>是</mu-td>
-                <mu-td>2000</mu-td>
-                <mu-td>200</mu-td>
-                <mu-td>
-                  <a>查看详情</a><br>
-                  <a> 通过</a><br>
-                  <a>驳回</a><br>
-                </mu-td>
-              </mu-tr>
-              <mu-tr>
-                <mu-td>20002</mu-td>
-                <mu-td>机票订单</mu-td>
-                <mu-td>王老五</mu-td>
-                <mu-td>否</mu-td>
-                <mu-td>2000</mu-td>
-                <mu-td>200</mu-td>
-                <mu-td> <a>查看详情</a><br>
-                  <a> 通过</a><br>
-                  <a>驳回</a><br></mu-td>
-              </mu-tr>
-              <mu-tr>
-                <mu-td>30002</mu-td>
-                <mu-td>酒店订单</mu-td>
-                <mu-td>李小二</mu-td>
-                <mu-td>是</mu-td>
-                <mu-td>2000</mu-td>
-                <mu-td>200</mu-td>
-                <mu-td> <a>查看详情</a><br>
-                  <a> 通过</a><br>
-                  <a>驳回</a><br></mu-td>
-              </mu-tr>
-              <mu-tr>
-                <mu-td>40004</mu-td>
-                <mu-td>酒店订单</mu-td>
-                <mu-td>张晓</mu-td>
-                <mu-td>是</mu-td>
-                <mu-td>2000</mu-td>
-                <mu-td>200</mu-td>
-                <mu-td> <a>查看详情</a><br>
-                  <a> 通过</a><br>
-                  <a>驳回</a><br></mu-td>
-              </mu-tr>
-              <mu-tr>
-                <mu-td>40004</mu-td>
-                <mu-td>酒店订单</mu-td>
-                <mu-td>张晓</mu-td>
-                <mu-td>是</mu-td>
-                <mu-td>2000</mu-td>
-                <mu-td>200</mu-td>
-                <mu-td> <a>查看详情</a><br>
-                  <a> 通过</a><br>
-                  <a>驳回</a><br></mu-td>
-              </mu-tr>
-              <mu-tr>
-                <mu-td>40004</mu-td>
-                <mu-td>酒店订单</mu-td>
-                <mu-td>张晓</mu-td>
-                <mu-td>是</mu-td>
-                <mu-td>2000</mu-td>
-                <mu-td>200</mu-td>
-                <mu-td> <a>查看详情</a><br>
-                  <a> 通过</a><br>
-                  <a>驳回</a><br></mu-td>
-              </mu-tr>
+
+          <div class="approval_table">
+            <mu-table :fixedFooter="fixedFooter" :fixedHeader="fixedHeader" :height="height"
+                      :enableSelectAll="enableSelectAll" :multiSelectable="multiSelectable"
+                      :selectable="selectable" :showCheckbox="showCheckbox">
+              <mu-thead slot="header">
+                <mu-tr>
+                  <mu-th tooltip="ID">订单号</mu-th>
+                  <mu-th tooltip="type">产品类型</mu-th>
+                  <mu-th tooltip="start_time">开始时间</mu-th>
+                  <mu-th tooltip="end_time">结束时间</mu-th>
+                  <mu-th tooltip="start_city">出发城市</mu-th>
+                  <mu-th tooltip="dest_city">到达城市</mu-th>
+                  <mu-th tooltip="user">出行人</mu-th>
+                  <mu-th tooltip="price">价格</mu-th>
+                  <mu-th tooltip="state">状态</mu-th>
+                  <mu-th tooltip="operation">操作</mu-th>
 
 
-            </mu-tbody>
-          </mu-table>
+                </mu-tr>
+              </mu-thead>
+              <mu-tbody>
+                <mu-tr v-for="item,index in tableData" :key="index" :selected="item.selected">
+                  <mu-td>{{index + 1}}</mu-td>
+                  <mu-td>{{item.type}}</mu-td>
+                  <mu-td><div class="sst">{{item.start_time}}</div></mu-td>
+                  <mu-td><div class="sst">{{item.end_time}}</div></mu-td>
+                  <mu-td>{{item.start_city}}</mu-td>
+                  <mu-td>{{item.dest_city}}</mu-td>
+                  <mu-td>{{item.user}}</mu-td>
+                  <mu-td>{{item.price}}</mu-td>
+                  <mu-td>{{item.state}}</mu-td>
+                  <mu-td>{{item.operation}}</mu-td>
+
+                </mu-tr>
+              </mu-tbody>
+            </mu-table>
+
+          </div>
         </div>
       </div>
 
 
-    </div>
+
   </div>
 
 
@@ -131,7 +84,42 @@
   export default {
     data() {
       return {
-        value: '1'
+        value: '1',
+        tableData: [
+          {
+            type: '机票',
+            start_time: '2017-01-02',
+            end_time: '2017-02-01',
+            start_city: '成都',
+            dest_city: '上海',
+            user: '张三',
+            price: '2000',
+            state:'审核通过',
+            operation:''
+
+          },
+          {
+            type: '酒店',
+            start_time: '2017-01-02 ',
+            end_time: '2017-02-01 ',
+            start_city: '成都',
+            dest_city: '上海',
+            user: '张三',
+            price: '400',
+            state:'审核不通过',
+            operation:''
+
+          },
+
+
+        ],
+        fixedHeader: true,
+        fixedFooter: false,
+        selectable: true,
+        multiSelectable: true,
+        enableSelectAll: false,
+        showCheckbox: false,
+        height: '300px'
       }
     },
     methods: {
@@ -173,12 +161,14 @@
       margin-left: 50px;
       background-color: white;
       border-radius: 10px;
-      .table{
+      .order_table {
         width: 100%;
         height: auto;
 
-        .xiangqing {
-          width: 900px;
+        .demo-table-settings {
+          width: 200px;
+          overflow: hidden;
+          margin: 20px auto 0px;
         }
       }
       .content_top {
