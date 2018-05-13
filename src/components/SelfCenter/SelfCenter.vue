@@ -72,7 +72,7 @@
                   </mu-tr>
 
                   <mu-tr class="button_self">
-                    <mu-raised-button label="编辑" class="demo-raised-button" primary/>
+                    <mu-raised-button label="编辑"  @click="dialog3 = true" class="demo-raised-button" primary/>
                   </mu-tr>
 
                 </mu-tbody>
@@ -209,6 +209,23 @@
             <mu-flat-button slot="actions" @click="dialog2 = false" primary label="取消"/>
             <mu-flat-button slot="actions"  @click="dialog2 = false" label="确定"/>
           </mu-dialog>
+          <mu-dialog :open="dialog3" title="编辑个人信息" @close="dialog3 = false">
+            <mu-row gutter>
+              <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">手机号：</mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入用户名"/><br/></mu-col>
+            </mu-row>
+            <mu-row gutter>
+              <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">邮箱：</mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入邮箱"/><br/></mu-col>
+            </mu-row>
+            <mu-row gutter>
+              <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">身份证：</mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入身份证"/><br/></mu-col>
+            </mu-row>
+
+            <mu-flat-button slot="actions" @click="dialog3 = false" primary label="取消"/>
+            <mu-flat-button slot="actions"  @click="dialog3 = false" label="确定"/>
+          </mu-dialog>
 
         </mu-col>
 
@@ -226,6 +243,7 @@
         value: '1',
         dialog1:false,
         dialog2:false,
+        dialog3:false,
         product_search_tab_select: 'info',
         product_search_tab_select: 'clbz',
         product_search_tab_select: 'cylk',
