@@ -172,9 +172,9 @@
             <div class="my_standard_item">
               <p class="my_standard_item_name">酒店</p>
               <div v-if="hotelStage != null">
-                <p class="my_standard_info">一线城市：<span class="gree_message">{{airTicketStage.priOne}}</span>元/天</p>
-                <p class="my_standard_info">二线城市：<span class="gree_message">{{airTicketStage.priTwo}}</span>元/天</p>
-                <p class="my_standard_info">其它城市：<span class="gree_message">{{airTicketStage.priThree}}</span>元/天</p>
+                <p class="my_standard_info">一线城市：<span class="gree_message">{{hotelStage.priOne}}</span>元/天</p>
+                <p class="my_standard_info">二线城市：<span class="gree_message">{{hotelStage.priTwo}}</span>元/天</p>
+                <p class="my_standard_info">其它城市：<span class="gree_message">{{hotelStage.priThree}}</span>元/天</p>
                 <p class="my_standard_info"><span class="gree_message" v-if="hotelStage.priFour == 1">可违规预定</span><span class="gree_message" v-else>不可违规预定</span></p>
               </div>
             </div>
@@ -202,8 +202,10 @@
     },
     created(){
       this.$http.post('/user/stage').then((res) =>{
-        this.airTicketStage = res.data.data.airTicketStage;
-        this.hotelStage = res.data.data.hotelStage;
+        if(res.data.data !== null) {
+          this.airTicketStage = res.data.data.airTicketStage;
+          this.hotelStage = res.data.data.hotelStage;
+        }
       })
     },
     methods: {
