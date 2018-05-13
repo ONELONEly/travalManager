@@ -1,6 +1,6 @@
 <template>
   <div id="approval">
-    <mu-breadcrumb class="breadcrumb">
+    <mu-breadcrumb class="approval_breadcrumb">
       <mu-breadcrumb-item href="javascript:void(0)">
         首页
       </mu-breadcrumb-item>
@@ -64,16 +64,22 @@
                   <mu-td>{{item.price}}</mu-td>
                   <mu-td>{{item.state}}</mu-td>
                   <mu-td>
-                    <mu-raised-button label="查看详情" @click="open"/><br/>
-                    <mu-raised-button label="通过" @click="open"/><br/>
-                    <mu-raised-button label="驳回" @click="open"/>
+                    <mu-raised-button label="查看详情" @click="$router.push('/home/order_details')"/><br/>
+                    <mu-raised-button label="通过"  @click="accept = true"/><br/>
+                    <mu-raised-button label="驳回" @click="reject = true"/>
                   </mu-td>
-
                 </mu-tr>
-                <mu-dialog :open="dialog" title="确认" @close="close">
+                <!---审核通过-->
+                <mu-dialog :open="accept" title="审核通过" @close="accept = false">
                   是否通过？
-                  <mu-flat-button slot="actions" @click="close" primary label="取消"/>
-                  <mu-flat-button slot="actions" primary @click="close" label="确定"/>
+                  <mu-flat-button slot="actions" @click="accept = false" primary label="取消"/>
+                  <mu-flat-button slot="actions" primary @click="accept = false" label="确定"/>
+                </mu-dialog>
+                <!---审核驳回-->
+                <mu-dialog :open="reject" title="审核驳回" @close="reject = false">
+                  是否驳回
+                  <mu-flat-button slot="actions" @click="reject = false" primary label="取消"/>
+                  <mu-flat-button slot="actions" primary @click="reject = false" label="确定"/>
                 </mu-dialog>
               </mu-tbody>
             </mu-table>
@@ -93,7 +99,8 @@
   export default {
     data() {
       return {
-        dialog: false,
+        accept: false,
+        reject: false,
         value: '1',
         tableData: [
           {
@@ -156,6 +163,13 @@
 
 <style lang="scss">
   #approval {
+    .approval_breadcrumb {
+      margin: 30px 50px;
+      width: 100%;
+      .mu-breadcrumb-item-link {
+        color: white;
+        margin: 10px;
+      }}
     .menu {
       float: left;
       display: inline-block;
@@ -215,10 +229,7 @@
 
     }
 
-    .mu-breadcrumb-item-link {
-      color: white;
-      margin: 10px;
-    }
+
     .demo-menu {
       display: inline-block;
       margin: 10px 50px 0 0;

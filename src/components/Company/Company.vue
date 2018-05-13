@@ -3,7 +3,6 @@
     <!--地址-->
     <mu-breadcrumb class="company_breadcrumb">
       <mu-breadcrumb-item href="javascript:void(0)">
-        <mu-icon value="home" :size="16"/>
         首页
       </mu-breadcrumb-item>
       <mu-breadcrumb-item href="javascript:void(0)">企业管理</mu-breadcrumb-item>

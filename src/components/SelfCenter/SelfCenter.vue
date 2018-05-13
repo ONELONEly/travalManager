@@ -2,7 +2,7 @@
   <div id="self">
     <mu-breadcrumb class="self_breadcrumb">
       <mu-breadcrumb-item href="javascript:void(0)">
-        <mu-icon value="home" :size="16"/>
+
         首页
       </mu-breadcrumb-item>
       <mu-breadcrumb-item href="javascript:void(0)">个人中心</mu-breadcrumb-item>
