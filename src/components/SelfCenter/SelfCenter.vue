@@ -177,7 +177,6 @@
                 <mu-tr class="button_self">
                   <mu-raised-button label="添加" @click="dialog2 = true" class="button_style" />
                 </mu-tr>
-
               </mu-table>
 
             </div>
@@ -186,28 +185,28 @@
 
             <mu-row gutter>
               <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">姓名：</mu-col>
-              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入姓名"/><br/></mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入姓名" v-model="name"/><br/></mu-col>
             </mu-row>
             <mu-row gutter>
               <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">电话：</mu-col>
-              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入电话号码"/><br/></mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入电话号码" v-model="phone"/><br/></mu-col>
             </mu-row>
             <mu-row gutter>
               <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">身份证号：</mu-col>
-              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入身份证号"/><br/></mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入身份证号" v-model="number"/><br/></mu-col>
             </mu-row>
             <mu-flat-button slot="actions" @click="dialog1 = false" primary label="取消"/>
-            <mu-flat-button slot="actions" primary @click="dialog1 = false" label="确定"/>
+            <mu-flat-button slot="actions" primary @click="insertAlwaysUser()" label="确定"/>
           </mu-dialog>
           <mu-dialog :open="dialog2" title="添加常用地址" @close="dialog2 = false">
 
             <mu-row gutter>
               <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">地址：</mu-col>
-              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入地址"/><br/></mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入地址" v-model="addr"/><br/></mu-col>
             </mu-row>
 
             <mu-flat-button slot="actions" @click="dialog2 = false" primary label="取消"/>
-            <mu-flat-button slot="actions"  @click="dialog2 = false" label="确定"/>
+            <mu-flat-button slot="actions"  @click="insertAlwaysAddr()" label="确定"/>
           </mu-dialog>
           <mu-dialog :open="dialog3" title="编辑个人信息" @close="dialog3 = false">
             <mu-row gutter>
@@ -252,7 +251,11 @@
         airTicketStage:null,
         hotelStage:null,
         alwaysUsers:[],
-        alwaysAddrs:[]
+        alwaysAddrs:[],
+        name:'',
+        phone:'',
+        number:'',
+        addr:''
       }
     },
     created(){
@@ -265,12 +268,8 @@
           this.hotelStage = res.data.data.hotelStage;
         }
       });
-      this.$http.post('/user/queryAlwaysUser',this.$qs.stringify({page:1,limit:10})).then((res) =>{
-        this.alwaysUsers = res.data.data;
-      });
-      this.$http.post('/user/queryAlwaysAddr',this.$qs.stringify({page:1,limit:10})).then((res) =>{
-        this.alwaysAddrs = res.data.data;
-      })
+      this.queryAlwaysUser();
+      this.queryAlwaysAddr();
     },
     methods: {
       handleChange(value) {
@@ -278,6 +277,33 @@
       },
       unselect() {
         this.$refs.table.unSelectAll()
+      },
+      insertAlwaysUser(){
+        this.$http.post("/user/insertAlwaysUser",{headers:{'contentType':'application/json'}},JSON.stringify({
+          name:this.name,
+          phone:this.phone,
+          number:this.number
+        })).then((res) => {
+          if(res.data.code === 200){
+            this.dialog1 = false;
+            this.queryAlwaysUser();
+          }else{
+            alert("异常发生");
+          }
+        });
+      },
+      insertAlwaysAddr(){
+        this.dialog2 = false;
+      },
+      queryAlwaysUser(){
+        this.$http.post('/user/queryAlwaysUser',this.$qs.stringify({page:1,limit:10})).then((res) =>{
+          this.alwaysUsers = res.data.data;
+        });
+      },
+      queryAlwaysAddr(){
+        this.$http.post('/user/queryAlwaysAddr',this.$qs.stringify({page:1,limit:10})).then((res) =>{
+          this.alwaysAddrs = res.data.data;
+        });
       }
 
     }
