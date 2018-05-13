@@ -32,43 +32,43 @@
                 <mu-thead>
                   <mu-tr>
 
-                    <mu-th style="text-align: center">个人信息</mu-th>
+                    <mu-th style="text-align: center" class="my_standard_item_name">个人信息</mu-th>
 
                   </mu-tr>
                 </mu-thead>
                 <mu-tbody>
                   <mu-tr>
                     <mu-td class="left_text">用户名:</mu-td>
-                    <mu-td class="right_text">232443212</mu-td>
+                    <mu-td class="right_text"><span v-if="userMessage != null">{{userMessage.desc}}</span></mu-td>
                   </mu-tr>
                   <mu-tr>
 
                     <mu-td class="left_text">姓名:</mu-td>
-                    <mu-td class="right_text">张三</mu-td>
+                    <mu-td class="right_text"><span v-if="userMessage != null">{{userMessage.dsca}}</span></mu-td>
                   </mu-tr>
                   <mu-tr>
 
                     <mu-td class="left_text">性别:</mu-td>
-                    <mu-td class="right_text">男</mu-td>
+                    <mu-td class="right_text"><span v-if="userMessage != null">{{userMessage.sex}}</span></mu-td>
                   </mu-tr>
                   <mu-tr>
 
-                    <mu-td class="left_text">部门:</mu-td>
-                    <mu-td class="right_text">技术部</mu-td>
+                    <mu-td class="left_text">部门编号:</mu-td>
+                    <mu-td class="right_text"><span v-if="userMessage != null">{{userMessage.dept}}</span></mu-td>
                   </mu-tr>
                   <mu-tr>
 
                     <mu-td class="left_text">手机号:</mu-td>
-                    <mu-td class="right_text">13808992478</mu-td>
+                    <mu-td class="right_text"><span v-if="userMessage != null">{{userMessage.phone}}</span></mu-td>
                   </mu-tr>
                   <mu-tr>
 
                     <mu-td class="left_text">邮箱:</mu-td>
-                    <mu-td class="right_text">328983290@qq.com</mu-td>
+                    <mu-td class="right_text"><span v-if="userMessage != null">{{userMessage.email}}</span></mu-td>
                   </mu-tr>
                   <mu-tr>
                     <mu-td class="left_text">身份证号:</mu-td>
-                    <mu-td class="right_text">4382959839205821</mu-td>
+                    <mu-td class="right_text"><span v-if="userMessage != null">{{userMessage.number}}</span></mu-td>
                   </mu-tr>
 
                   <mu-tr class="button_self">
@@ -87,44 +87,40 @@
                 <mu-thead>
                   <mu-tr>
 
-                    <mu-th style="text-align: center">我的差旅标准</mu-th>
+                    <mu-th style="text-align: center" class="my_standard_item_name">我的差旅标准</mu-th>
 
                   </mu-tr>
                 </mu-thead>
                 <mu-tbody>
-                  <mu-tr>
-                    <mu-td class="left_text">机票：主管级别</mu-td>
-                    <mu-td class="right_text">酒店：主管级别</mu-td>
-                  </mu-tr>
-                  <mu-tr>
 
-                    <mu-td class="left_text">出发时间前后60分钟内最低价航班</mu-td>
-                    <mu-td class="right_text">一线城市：300元/间夜</mu-td>
-                  </mu-tr>
                   <mu-tr>
-
-                    <mu-td class="left_text">提前3天以上预定航班</mu-td>
-                    <mu-td class="right_text">二线城市：200元/间夜</mu-td>
-                  </mu-tr>
-                  <mu-tr>
-
-                    <mu-td class="left_text">6折以下价位</mu-td>
-                    <mu-td class="right_text">其他城市：100元/间夜</mu-td>
-                  </mu-tr>
-                  <mu-tr>
-
-                    <mu-td class="left_text">经济舱以下舱位</mu-td>
-                    <mu-td class="right_text">可违规预定</mu-td>
-                  </mu-tr>
-                  <mu-tr>
-
-                    <mu-td class="left_text">可违规预定</mu-td>
-
+                    <mu-td class="left_text">机票</mu-td>
+                    <mu-td class="right_text">酒店</mu-td>
                   </mu-tr>
 
+                  <mu-tr>
+                    <mu-td class="left_text" ><div v-if="airTicketStage != null">出发时间前后<span class="gree_message">{{airTicketStage.priOne}}</span>分钟内最低价航班</div></mu-td>
+                    <mu-td class="right_text"><div v-if="hotelStage != null">一线城市：<span class="gree_message">{{hotelStage.priOne}}</span>元/间夜</div></mu-td>
+                  </mu-tr>
 
+                  <mu-tr>
+                    <mu-td class="left_text"><div v-if="airTicketStage != null">提前<span class="gree_message">{{airTicketStage.priTwo}}</span>天以上预定航班</div></mu-td>
+                    <mu-td class="right_text"><div v-if="hotelStage != null">二线城市：<span class="gree_message">{{hotelStage.priTwo}}</span>元/间夜</div></mu-td>
+                  </mu-tr>
 
+                  <mu-tr>
+                    <mu-td class="left_text"><div v-if="airTicketStage != null"><span class="gree_message">{{airTicketStage.priThree}}</span>折以下价位</div></mu-td>
+                    <mu-td class="right_text"><div v-if="hotelStage != null">其它城市：<span class="gree_message">{{hotelStage.priThree}}</span>元/间夜</div></mu-td>
+                  </mu-tr>
 
+                  <mu-tr>
+                    <mu-td class="left_text"><div v-if="airTicketStage != null"><span class="gree_message">{{airTicketStage.priFour}}</span>以下舱位</div></mu-td>
+                    <mu-td class="right_text"><div v-if="hotelStage != null"><span class="gree_message" v-if="hotelStage.priFour == 1">可违规预定</span><span class="gree_message" v-else>不可违规预定</span></div></mu-td>
+                  </mu-tr>
+
+                  <mu-tr>
+                    <mu-td class="left_text"><div v-if="airTicketStage != null"><span class="gree_message" v-if="airTicketStage.priFive == 1">可违规预定</span><span class="gree_message" v-else>不可违规预定</span></div></mu-td>
+                  </mu-tr>
                 </mu-tbody>
               </mu-table>
 
@@ -136,47 +132,24 @@
               <mu-table :showCheckbox="false">
                 <mu-thead>
                   <mu-tr>
-
-                    <mu-th style="text-align: left">常用旅客</mu-th>
-
+                    <mu-th style="text-align: left" class="my_standard_item_name">常用旅客</mu-th>
                   </mu-tr>
-                </mu-thead>
-                <mu-tbody>
                   <mu-tr>
-                    <mu-td >序号</mu-td>
                     <mu-td >姓名</mu-td>
                     <mu-td >电话</mu-td>
                     <mu-td >身份证号</mu-td>
                   </mu-tr>
+                </mu-thead>
+                <mu-tbody v-for="alwaysUser in alwaysUsers">
                   <mu-tr>
-
-                    <mu-td >1</mu-td>
-                    <mu-td >张晓梅</mu-td>
-                    <mu-td >13489832</mu-td>
-                    <mu-td >6659082134</mu-td>
+                    <mu-td >{{alwaysUser.name}}</mu-td>
+                    <mu-td >{{alwaysUser.phone}}</mu-td>
+                    <mu-td >{{alwaysUser.number}}</mu-td>
                   </mu-tr>
-                  <mu-tr>
-
-                    <mu-td >2</mu-td>
-                    <mu-td >王小二</mu-td>
-                    <mu-td >124245435</mu-td>
-                    <mu-td >2439835809</mu-td>
-                  </mu-tr>
-                  <mu-tr>
-
-                    <mu-td >3</mu-td>
-                    <mu-td >李晓东</mu-td>
-                    <mu-td >12454434</mu-td>
-                    <mu-td >55645232</mu-td>
-                  </mu-tr>
-
-
-
-                  <mu-tr class="button_self">
-                    <mu-raised-button label="添加" class="demo-raised-button" primary/>
-                  </mu-tr>
-
                 </mu-tbody>
+                <mu-tr class="button_self">
+                  <mu-raised-button label="添加" class="demo-raised-button" primary/>
+                </mu-tr>
               </mu-table>
 
             </div>
@@ -188,35 +161,21 @@
               <mu-table :showCheckbox="false">
                 <mu-thead>
                   <mu-tr>
+                    <mu-th style="text-align: left" class="my_standard_item_name">常用地址</mu-th>
+                  </mu-tr>
 
-                    <mu-th style="text-align: left">常用地址</mu-th>
-
+                  <mu-tr>
+                    <mu-td >地址</mu-td>
                   </mu-tr>
                 </mu-thead>
-                <mu-tbody>
+                <mu-tbody v-for="alwaysAddr in alwaysAddrs">
                   <mu-tr>
-                    <mu-td >序号</mu-td>
-                    <mu-td >地址</mu-td>
-
+                    <mu-td>{{alwaysAddr.address}}</mu-td>
                   </mu-tr>
-                  <mu-tr>
-
-                    <mu-td >1</mu-td>
-                    <mu-td >成都市青城山镇东软大道</mu-td>
-
-                  </mu-tr>
-                  <mu-tr>
-
-                    <mu-td >2</mu-td>
-                    <mu-td >成都市青羊区</mu-td>
-                  </mu-tr>
-
-
-                  <mu-tr class="button_self">
-                    <mu-raised-button label="添加" class="demo-raised-button" primary/>
-                  </mu-tr>
-
                 </mu-tbody>
+                <mu-tr class="button_self">
+                  <mu-raised-button label="添加" class="demo-raised-button" primary/>
+                </mu-tr>
               </mu-table>
 
             </div>
@@ -240,7 +199,27 @@
         product_search_tab_select: 'clbz',
         product_search_tab_select: 'cylk',
         product_search_tab_select: 'cydz',
+        userMessage:null,
+        airTicketStage:null,
+        hotelStage:null,
+        alwaysUsers:[],
+        alwaysAddrs:[]
       }
+    },
+    created(){
+      this.$http.post("/user/message").then((res) => {
+        this.userMessage = res.data.data;
+      });
+      this.$http.post('/user/stage').then((res) =>{
+        this.airTicketStage = res.data.data.airTicketStage;
+        this.hotelStage = res.data.data.hotelStage;
+      });
+      this.$http.post('/user/queryAlwaysUser',this.$qs.stringify({page:1,limit:10})).then((res) =>{
+        this.alwaysUsers = res.data.data;
+      });
+      this.$http.post('/user/queryAlwaysAddr',this.$qs.stringify({page:1,limit:10})).then((res) =>{
+        this.alwaysAddrs = res.data.data;
+      })
     },
     methods: {
       handleChange(value) {
@@ -291,6 +270,17 @@
         margin-left: 50px;
         background-color: white;
         border-radius: 10px;
+        .my_standard_item_name {
+          color: #00bfff;
+          font-size: 1rem;
+          padding: 0;
+          margin: 5px 0;
+        }
+        .gree_message {
+          color:#008000;
+          font-size: large;
+          font-weight: bold;
+        }
         //右侧内容头部样式
         .self_content_top {
           display: inline-block;

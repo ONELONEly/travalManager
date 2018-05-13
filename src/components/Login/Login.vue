@@ -43,7 +43,7 @@ export default {
           username: this.username,
           password: this.password
         });
-        this.$http.post("/travalManager/loginCheck", postData).then(function (res) {
+        this.$http.post("/loginCheck", postData).then(function (res) {
           if (res.data.data) {
             this.msg = '';
             this.$router.push('/home');

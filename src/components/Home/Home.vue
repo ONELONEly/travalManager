@@ -20,18 +20,19 @@
     // 数据
     data() {
       return {
-        menuList: [{
-          "id": 100,
-          "desc": "父菜单",
-          "level": 0,
-          "addr": null,
-          "menuList": [{"id": 101, "desc": "子菜单", "level": 1, "addr": "./company", "menuList": null}]
-        }]
       }
     },
     created(){
-      this.$http.post('/travalManager/loginStatus').then( (res) => {
+      this.$http.post('/loginStatus').then( (res) => {
         this.$store.commit('setLoginUser',res.data.data);
+      });
+      let postData = JSON.stringify({
+        address:'上海'
+      });
+      let queryData = this.$qs.stringify({
+        page : 1,
+        limit : 5,
+        key : ''
       });
     },
     // 方法

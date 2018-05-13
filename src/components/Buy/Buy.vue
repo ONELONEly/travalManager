@@ -161,14 +161,22 @@
             <!--差旅标准条目-->
             <div class="my_standard_item">
               <p class="my_standard_item_name">机票</p>
-              <p class="my_standard_info">提前三天预订</p>
-              <p class="my_standard_info">机票折扣限制：6折</p>
+              <div v-if="airTicketStage != null">
+                <p class="my_standard_info">出发时间前后<span class="gree_message">{{airTicketStage.priOne}}</span>分钟内最低航班</p>
+                <p class="my_standard_info">提前<span class="gree_message">{{airTicketStage.priTwo}}</span>天预订</p>
+                <p class="my_standard_info"><span class="gree_message">{{airTicketStage.priThree}}</span>折以下价位</p>
+                <p class="my_standard_info"><span class="gree_message">{{airTicketStage.priFour}}</span>以下舱位</p>
+                <p class="my_standard_info"><span class="gree_message" v-if="airTicketStage.priFive == 1">可违规预定</span><span class="gree_message" v-else>不可违规预定</span></p>
+              </div>
             </div>
             <div class="my_standard_item">
               <p class="my_standard_item_name">酒店</p>
-              <p class="my_standard_info">一线城市：300元/天</p>
-              <p class="my_standard_info">二线城市：200元/天</p>
-              <p class="my_standard_info">三线城市：100元/天</p>
+              <div v-if="hotelStage != null">
+                <p class="my_standard_info">一线城市：<span class="gree_message">{{airTicketStage.priOne}}</span>元/天</p>
+                <p class="my_standard_info">二线城市：<span class="gree_message">{{airTicketStage.priTwo}}</span>元/天</p>
+                <p class="my_standard_info">其它城市：<span class="gree_message">{{airTicketStage.priThree}}</span>元/天</p>
+                <p class="my_standard_info"><span class="gree_message" v-if="hotelStage.priFour == 1">可违规预定</span><span class="gree_message" v-else>不可违规预定</span></p>
+              </div>
             </div>
           </div>
         </mu-paper>
@@ -187,8 +195,16 @@
         // 因公或因私
         publicOrPrivate: '',
         // 更多文字
-        moreText: '更多 >'
+        moreText: '更多 >',
+        airTicketStage:null,
+        hotelStage:null
       }
+    },
+    created(){
+      this.$http.post('/user/stage').then((res) =>{
+        this.airTicketStage = res.data.data.airTicketStage;
+        this.hotelStage = res.data.data.hotelStage;
+      })
     },
     methods: {
       handleTabChange(val) {
@@ -261,7 +277,7 @@
           // 条目
           .my_standard_item {
             .my_standard_item_name {
-              color: red;
+              color: #00bfff;
               font-size: 1rem;
               padding: 0;
               margin: 5px 0;
@@ -269,6 +285,11 @@
             .my_standard_info {
               margin: 0 0 0 15px;
               padding: 0;
+              .gree_message {
+                color:#008000;
+                font-size: large;
+                font-weight: bold;
+              }
             }
           }
         }
