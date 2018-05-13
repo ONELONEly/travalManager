@@ -16,8 +16,9 @@ Vue.config.productionTip = false
 Vue.use(MuseUI)
 // 添加axios
 Vue.prototype.$http = axios.create({
-  baseURL: 'http://www.kellyj.top:8080/',
+  baseURL: 'http://www.kellyj.top:8080/travalManager/',
   withCredentials: true,
+  // headers: {'Access-Control-Allow-Origin': '*','Access-Control-Allow-Credentials': 'true','Content-type': 'application/json' }
   headers: {'Access-Control-Allow-Origin': '*','Access-Control-Allow-Credentials': 'true'}
 });
 Vue.prototype.$qs = qs
