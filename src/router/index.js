@@ -49,6 +49,11 @@ export default new Router({
           path: 'selfcenter',
           name: 'selfcenter',
           component: require('@/components/SelfCenter/SelfCenter').default
+        },
+        {
+          path: 'reserve',
+          name: 'reserve',
+          component: require('@/components/Reserve/Reserve').default
         }
       ]
     }

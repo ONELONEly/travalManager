@@ -1,7 +1,7 @@
 <template>
   <div id="buy">
     <!--书签-->
-    <mu-breadcrumb class="breadcrumb">
+    <mu-breadcrumb class="breadcrumb_qy">
       <mu-breadcrumb-item href="javascript:void(0)">
         首页
       </mu-breadcrumb-item>
@@ -311,13 +311,13 @@
   }
 
   // 书签
-  .breadcrumb {
+  .breadcrumb_qy {
     padding: 30px 50px;
     width: 100%;
     text-align: left;
-  }
-  .mu-breadcrumb-item-link {
-    color: white;
-    margin: 10px;
+    .mu-breadcrumb-item-link {
+      color: white;
+      margin: 10px;
+    }
   }
 </style>
