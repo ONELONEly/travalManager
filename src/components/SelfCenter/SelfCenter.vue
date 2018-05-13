@@ -133,7 +133,7 @@
           <!--常用旅客-->
           <div v-if="product_search_tab_select === 'cylk'">
             <div class="self_talbe">
-              <mu-table :showCheckbox="false">
+              <mu-table :showCheckbox="false" >
                 <mu-thead>
                   <mu-tr>
 
@@ -169,11 +169,8 @@
                     <mu-td >12454434</mu-td>
                     <mu-td >55645232</mu-td>
                   </mu-tr>
-
-
-
                   <mu-tr class="button_self">
-                    <mu-raised-button label="添加" class="demo-raised-button" primary/>
+                    <mu-raised-button label="添加" @click="dialog1 = true" class="button_style" />
                   </mu-tr>
 
                 </mu-tbody>
@@ -212,15 +209,42 @@
                   </mu-tr>
 
 
-                  <mu-tr class="button_self">
-                    <mu-raised-button label="添加" class="demo-raised-button" primary/>
-                  </mu-tr>
 
+                  <mu-tr class="button_self">
+                    <mu-raised-button label="添加" @click="dialog2 = true" class="button_style" />
+                  </mu-tr>
                 </mu-tbody>
               </mu-table>
 
             </div>
           </div>
+          <mu-dialog :open="dialog1" title="添加常用旅客" @close="dialog1 = false">
+
+            <mu-row gutter>
+              <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">姓名：</mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入姓名"/><br/></mu-col>
+            </mu-row>
+            <mu-row gutter>
+              <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">电话：</mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入电话号码"/><br/></mu-col>
+            </mu-row>
+            <mu-row gutter>
+              <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">身份证号：</mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入身份证号"/><br/></mu-col>
+            </mu-row>
+            <mu-flat-button slot="actions" @click="dialog1 = false" primary label="取消"/>
+            <mu-flat-button slot="actions" primary @click="dialog1 = false" label="确定"/>
+          </mu-dialog>
+          <mu-dialog :open="dialog2" title="添加常用地址" @close="dialog2 = false">
+
+            <mu-row gutter>
+              <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">地址：</mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入地址"/><br/></mu-col>
+            </mu-row>
+
+            <mu-flat-button slot="actions" @click="dialog2 = false" primary label="取消"/>
+            <mu-flat-button slot="actions"  @click="dialog2 = false" label="确定"/>
+          </mu-dialog>
 
         </mu-col>
 
@@ -235,6 +259,8 @@
   export default {
     data() {
       return {
+        dialog1: false,
+        dialog2: false,
         value: '1',
         product_search_tab_select: 'info',
         product_search_tab_select: 'clbz',
@@ -331,7 +357,14 @@
           .button_self {
             text-align: right;
 
+          .button_style{
+            background-color: #2196f3;
+            color: white;
+            margin-top: 10px;
           }
+
+          }
+
         }
 
       }
