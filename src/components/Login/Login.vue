@@ -31,7 +31,8 @@ export default {
       username: '',
       password:'',
       usernameError:'',
-      passwordError:''
+      passwordError:'',
+      status:false
     }
   },
   methods: {
@@ -43,15 +44,23 @@ export default {
           username: this.username,
           password: this.password
         });
-        this.$http.post("/loginCheck", postData).then(function (res) {
-          if (res.data.data) {
-            this.msg = '';
-            this.$router.push('/home');
-          } else {
-            this.msg = "密码错误";
+        this.$axios.post("/login",{
+          userDesc: this.username,
+          userPassword: this.password
+        },{headers:{'contentType':'application/json'}}).then(function (res) {
+          if(res.data.code === 200){
+            this.$http.post("/loginCheck", postData).then( (res) => {
+              if (res.data.data) {
+                this.msg = '';
+                this.$router.push('/home');
+              } else {
+                this.msg = "密码错误";
+              }
+            });
+          }else{
+            this.msg = res.data.msg;
           }
         }.bind(this));
-
       }
     },
     inputValidation() {
