@@ -57,14 +57,14 @@ export default {
     inputValidation() {
 
       if(this.username.length < 1 || this.username.indexOf(' ') > -1 || this.username.length > 11){
-        this.usernameError = "请输入用户名（不包含空格，且在11个字符之内）";
+        this.usernameError = "请输入用户名（不包含空格）";
         return false;
       }else{
         this.usernameError = '';
       }
 
       if(this.password.length < 1 || this.password.indexOf(' ') > -1 || this.password.length > 20){
-        this.passwordError = "请输入密码（不包含空格，且在20个字符之内）";
+        this.passwordError = "请输入密码（不包含空格）";
         return false;
       }else{
         this.passwordError = '';
