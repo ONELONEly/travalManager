@@ -279,7 +279,7 @@
         this.$refs.table.unSelectAll()
       },
       insertAlwaysUser(){
-        this.$http.post("/user/insertAlwaysUser",{'contentType':'application/json'},JSON.stringify({
+        this.$http.post("/user/insertAlwaysUser",{headers:{'contentType':'application/json'}},JSON.stringify({
           name:this.name,
           phone:this.phone,
           number:this.number
