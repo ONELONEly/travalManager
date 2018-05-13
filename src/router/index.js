@@ -54,6 +54,11 @@ export default new Router({
           path: 'reserve',
           name: 'reserve',
           component: require('@/components/Reserve/Reserve').default
+        },
+        {
+          path: 'hotel',
+          name: 'hotel',
+          component: require('@/components/Hotel/Hotel').default
         }
       ]
     }
