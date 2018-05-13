@@ -211,8 +211,10 @@
         this.userMessage = res.data.data;
       });
       this.$http.post('/user/stage').then((res) =>{
-        this.airTicketStage = res.data.data.airTicketStage;
-        this.hotelStage = res.data.data.hotelStage;
+        if(res.data.data !== null) {
+          this.airTicketStage = res.data.data.airTicketStage;
+          this.hotelStage = res.data.data.hotelStage;
+        }
       });
       this.$http.post('/user/queryAlwaysUser',this.$qs.stringify({page:1,limit:10})).then((res) =>{
         this.alwaysUsers = res.data.data;
