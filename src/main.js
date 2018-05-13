@@ -18,7 +18,12 @@ Vue.use(MuseUI)
 Vue.prototype.$http = axios.create({
   baseURL: 'http://www.kellyj.top:8080/travalManager/',
   withCredentials: true,
-  // headers: {'Access-Control-Allow-Origin': '*','Access-Control-Allow-Credentials': 'true','Content-type': 'application/json' }
+  headers: {'Access-Control-Allow-Origin': '*','Access-Control-Allow-Credentials': 'true'}
+});
+
+Vue.prototype.$axios = axios.create({
+  baseURL: 'http://www.knockyouth.com:8080/cxm_new/',
+  withCredentials: true,
   headers: {'Access-Control-Allow-Origin': '*','Access-Control-Allow-Credentials': 'true'}
 });
 Vue.prototype.$qs = qs
