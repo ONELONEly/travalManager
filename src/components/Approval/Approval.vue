@@ -63,9 +63,18 @@
                   <mu-td>{{item.user}}</mu-td>
                   <mu-td>{{item.price}}</mu-td>
                   <mu-td>{{item.state}}</mu-td>
-                  <mu-td>{{item.operation}}</mu-td>
+                  <mu-td>
+                    <mu-raised-button label="查看详情" @click="open"/><br/>
+                    <mu-raised-button label="通过" @click="open"/><br/>
+                    <mu-raised-button label="驳回" @click="open"/>
+                  </mu-td>
 
                 </mu-tr>
+                <mu-dialog :open="dialog" title="确认" @close="close">
+                  是否通过？
+                  <mu-flat-button slot="actions" @click="close" primary label="取消"/>
+                  <mu-flat-button slot="actions" primary @click="close" label="确定"/>
+                </mu-dialog>
               </mu-tbody>
             </mu-table>
 
@@ -84,6 +93,7 @@
   export default {
     data() {
       return {
+        dialog: false,
         value: '1',
         tableData: [
           {
@@ -130,6 +140,12 @@
       },
       unselect () {
         this.$refs.table.unSelectAll()
+      },
+      open () {
+        this.dialog = true
+      },
+      close () {
+        this.dialog = false
       }
 
     }

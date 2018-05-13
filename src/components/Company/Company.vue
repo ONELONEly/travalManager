@@ -37,7 +37,7 @@
         <mu-raised-button label="添加部门" class="demo-raised-button" 添加部门/>
         <mu-raised-button label="添加员工" class="demo-raised-button" 添加员工/>
       </div>
-           <!--table-->
+           <!--组织架构管理-->
       <div class="company_table">
         <mu-table :fixedFooter="fixedFooter" :fixedHeader="fixedHeader" :height="height"
                   :enableSelectAll="enableSelectAll" :multiSelectable="multiSelectable"
@@ -66,14 +66,23 @@
               <mu-td>{{item.leval}}</mu-td>
               <mu-td>{{item.user_power}}</mu-td>
               <mu-td>{{item.user_phone}}</mu-td>
-              <mu-td>{{item.user_email}}</mu-td>
-              <mu-td>{{item.operation}}</mu-td>
+              <mu-td class="email">{{item.user_email}}</mu-td>
+              <mu-td>
+                <mu-raised-button label="编辑" @click="open"/><br/>
+                <mu-raised-button label="删除" @click="open"/>
+              </mu-td>
 
             </mu-tr>
+            <mu-dialog :open="dialog" title="删除" @close="close">
+              你确认要删除此员工吗？
+              <mu-flat-button slot="actions" @click="close" primary label="取消"/>
+              <mu-flat-button slot="actions" primary @click="close" label="确定"/>
+            </mu-dialog>
           </mu-tbody>
         </mu-table>
 
       </div>
+
     </div>
   </div>.
     </div>
@@ -84,6 +93,7 @@
   export default {
     data() {
       return {
+        dialog: false,
         value: '1',
         tableData: [
           {
@@ -128,9 +138,16 @@
       },
       unselect() {
         this.$refs.table.unSelectAll()
+      },
+      open () {
+        this.dialog = true
+      },
+      close () {
+        this.dialog = false
       }
-
     }
+
+
 
   }
 </script>
@@ -206,6 +223,7 @@
             overflow: hidden;
             margin: 20px auto 0px;
           }
+
         }
       }
     }
