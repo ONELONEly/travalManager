@@ -15,22 +15,22 @@
         <div class="reserve_info_title">订单信息</div>
         <!--内容-->
         <div class="reserve_content">
-          <span class="reserve_name">订单名字</span>
+          <span class="reserve_name">{{orderName}}</span>
           <div class="reserve_time_box">
             <div class="reserve_time_se_box">
-              <div class="reserve_time">开始时间</div>
-              <div>其他信息</div>
+              <div class="reserve_time">{{orderStartTime}}</div>
+              <div>开始时间</div>
             </div>
             <mu-icon value="arrow_forward"></mu-icon>
             <div class="reserve_time_se_box">
-              <div class="reserve_time">结束时间</div>
-              <div>其他信息</div>
+              <div class="reserve_time">{{orderEndTime}}</div>
+              <div>结束时间</div>
             </div>
           </div>
           <!--类型-->
-          <span class="reserve_type">经济舱9折</span>
+          <span class="reserve_type">{{orderItemType}}</span>
           <!--价格-->
-          <span class="reserve_price">￥3800</span>
+          <span class="reserve_price">￥{{orderPrice}}</span>
         </div>
       </mu-paper>
       <!--出行人信息-->
@@ -82,7 +82,7 @@
           </div>
         </div>
       </mu-paper>
-      <mu-raised-button label="提交" style="float: right;margin: 20px" primary/>
+      <mu-raised-button label="提交" style="float: right;margin: 20px" primary @click="submitOrder"/>
     </div>
   </div>
 </template>
@@ -90,21 +90,133 @@
 <script>
   export default {
     name: 'reserve',
+    // 页面创建时
+    created() {
+      this.publicOrPrivate = this.$route.params.publicOrPrivate
+      // 判断类型
+      this.type = this.$route.params.type
+      if (this.type == 'Hotel') {
+        this.checkInTime = this.$route.params.checkInTime
+        this.leaveTime = this.$route.params.leaveTime
+        this.hotel = this.$route.params.hotel
+        this.rom = this.$route.params.rom
+      }
+      else if(this.type == 'PlaneTicket') {
+        this.plane = this.$route.params.plane
+        this.ticket = this.$route.params.ticket
+      }
+    },
     // 数据
     data() {
       return {
         // 出行原因
         travelReason: "",
         // 违规原因
-        breachReason: ""
+        breachReason: "",
+        publicOrPrivate: "",
+        type: '',
+        plane: '',
+        ticket: '',
+        checkInTime: '',
+        leaveTime: '',
+        hotel: '',
+        rom: ''
       }
     },
     // 计算变量
     computed: {
       user() {
         return this.$store.state.user.loginUser.user;
+      },
+      orderName() {
+        if (this.type == 'Hotel') {
+          return this.hotel.hotelPO.hotelName
+        }else if(this.type == 'PlaneTicket'){
+          return this.plane.airTicketPO.fromCity + ' - ' + this.plane.airTicketPO.destCity
+        }else {
+          return ""
+        }
+      },
+      orderStartTime() {
+        if (this.type == 'Hotel') {
+          return this.checkInTime
+        }else if(this.type == 'PlaneTicket'){
+          return this.plane.airTicketPO.startTime
+        }else {
+          return ""
+        }
+      },
+      orderEndTime() {
+        if (this.type == 'Hotel') {
+          return this.leaveTime
+        }else if(this.type == 'PlaneTicket'){
+          return this.plane.airTicketPO.endTime
+        }else {
+          return ""
+        }
+      },
+      orderPrice() {
+        if (this.type == 'Hotel') {
+          return this.rom.roomPrice
+        }else if(this.type == 'PlaneTicket'){
+          return this.ticket.price
+        }else {
+          return ""
+        }
+      },
+      orderItemType(){
+        if (this.type == 'Hotel') {
+          return this.rom.roomType
+        }else if(this.type == 'PlaneTicket'){
+          return this.ticket.seatType
+        }else {
+          return ""
+        }
       }
-    }
+    },
+    methods: {
+      // 提交订单
+      submitOrder() {
+        if (this.type == 'Hotel') {
+
+          this.$axios.post('/hotel/order',{
+            type: this.publicOrPrivate,
+            priFive: this.breachReason == ""?0:1,
+            userIdList: [this.user.id],
+            hotelCostId: this.rom.hotelCostId,
+            beginTime: this.checkInTime,
+            endTime: this.leaveTime,
+            destReason: this.travelReason,
+            violationReason: this.breachReason
+          }).then((res) =>{
+            alert(res.data.msg)
+          })
+        }else if(this.type == 'PlaneTicket'){
+          console.log(JSON.stringify(
+            {
+              type: this.publicOrPrivate,
+              priFive: this.breachReason == ""?0:1,
+              userIdList: [this.user.id],
+              airTicketCostId: this.ticket.airTicketCostId,
+              destReason: this.travelReason,
+              violationReason: this.breachReason
+            }
+          ))
+          this.$axios.post('/airTicket/order',{
+            type: this.publicOrPrivate,
+            priFive: this.breachReason == ""?0:1,
+            userIdList: [this.user.id],
+            airTicketCostId: this.ticket.airTicketCostId,
+            destReason: this.travelReason,
+            violationReason: this.breachReason
+          }).then((res) =>{
+            alert(res.data.msg)
+          })
+        }else {
+          return
+        }
+      }
+    },
   }
 </script>
 

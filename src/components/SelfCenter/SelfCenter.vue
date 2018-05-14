@@ -132,7 +132,7 @@
                     <mu-td >性别</mu-td>
                   </mu-tr>
                 </mu-thead>
-                <mu-tbody v-for="alwaysUser in alwaysUsers">
+                <mu-tbody v-for="(alwaysUser,index) in alwaysUsers" :key="index">
                   <mu-tr>
                     <mu-td >{{alwaysUser.name}}</mu-td>
                     <mu-td >{{alwaysUser.phone}}</mu-td>
@@ -162,7 +162,7 @@
                     <mu-td >地址</mu-td>
                   </mu-tr>
                 </mu-thead>
-                <mu-tbody v-for="alwaysAddr in alwaysAddrs">
+                <mu-tbody v-for="(alwaysAddr,index) in alwaysAddrs" :key=index>
                   <mu-tr>
                     <mu-td>{{alwaysAddr.address}}</mu-td>
                   </mu-tr>

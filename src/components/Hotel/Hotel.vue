@@ -15,41 +15,41 @@
         <mu-date-picker v-model="checkInTime" hintText="入住时间"/>
         <span style="margin: 0 10px"> - </span>
         <mu-date-picker v-model="leaveTime" hintText="离开时间"/>
-        <mu-raised-button class="pt_search_btn" label="查询" primary/>
+        <mu-raised-button class="pt_search_btn" label="查询" primary @click="getHotelInfo"/>
       </mu-paper>
       <!--机票条目-->
-      <mu-paper class="pt_item">
+      <mu-paper v-for="(hotel, index) in hotelWithCostBOList" :key="index" class="pt_item">
         <!--酒店图片-->
-        <img class="hotel_img" src="">
+        <img class="hotel_img" :src="hotel.hotelPO.hotelPic1">
         <div class="hotel_info_box">
-          <div class="hotel_info_name">成都皇冠酒店</div>
-          <div class="pt_info_address">成都市*****</div>
-          <div class="pt_info_phone">1***********</div>
+          <div class="hotel_info_name">{{hotel.hotelPO.hotelName}}</div>
+          <div class="pt_info_address">{{hotel.hotelPO.hotelPosition}}</div>
+          <div class="pt_info_phone">{{hotel.hotelPO.hotelTel}}</div>
         </div>
         <!--收起展开按钮-->
         <mu-raised-button class="pt_item_btn" label="收起" labelPosition="before" icon="expand_less" primary/>
         <!--机票列表-->
-        <div class="pt_item_list_box">
+        <div v-for="(hotelItem, itemIndex) in hotel.hotelCostPOList" :key="itemIndex" class="pt_item_list_box">
           <div class="plan_ticket">
             <!--图片-->
-            <img class="room_img" src="">
-            <span class="plan_ticket_name">大床房</span>
+            <img class="room_img" :src="hotel.hotelPO.hotelPic2">
+            <span class="plan_ticket_name">{{hotelItem.roomType}}</span>
             <!--价格-->
-            <span class="plan_ticket_price">￥380</span>
+            <span class="plan_ticket_price">￥{{hotelItem.roomPrice}}</span>
             <!--预定按钮-->
             <mu-raised-button label="预定" class="plan_ticket_order_btn" secondary
-                              @click="$router.push('/home/reserve')"/>
+                              @click="toReserve(hotel,hotelItem)"/>
           </div>
-          <div class="plan_ticket">
-            <!--图片-->
-            <img class="room_img" src="">
-            <span class="plan_ticket_name">大床房</span>
-            <!--价格-->
-            <span class="plan_ticket_price">￥340</span>
-            <!--预定按钮-->
-            <mu-raised-button label="预定" class="plan_ticket_order_btn" secondary
-                              @click="$router.push('/home/reserve')"/>
-          </div>
+          <!--<div class="plan_ticket">-->
+            <!--&lt;!&ndash;图片&ndash;&gt;-->
+            <!--<img class="room_img" src="">-->
+            <!--<span class="plan_ticket_name">大床房</span>-->
+            <!--&lt;!&ndash;价格&ndash;&gt;-->
+            <!--<span class="plan_ticket_price">￥340</span>-->
+            <!--&lt;!&ndash;预定按钮&ndash;&gt;-->
+            <!--<mu-raised-button label="预定" class="plan_ticket_order_btn" secondary-->
+                              <!--@click="$router.push('/home/reserve')"/>-->
+          <!--</div>-->
         </div>
       </mu-paper>
     </div>
@@ -66,7 +66,8 @@
         hotelPlace: "",
         checkInTime: "",
         leaveTime: "",
-        hotelKey: ""
+        hotelKey: "",
+        hotelWithCostBOList: []
       }
     },
     // 页面创建时
@@ -89,7 +90,23 @@
           hotelCity: this.hotelPlace
         }).then((res) =>{
           console.log(res.data)
+          this.hotelWithCostBOList = res.data.data.hotelWithCostBOList
         })
+      },
+      // 预定
+      toReserve(hotel,rom) {
+        this.$router.push({
+          name: 'reserve',
+          params: {
+            publicOrPrivate: this.publicOrPrivate,
+            type: 'Hotel',
+            checkInTime: this.checkInTime,
+            leaveTime: this.leaveTime,
+            hotel: hotel,
+            rom: rom
+          }
+        })
+        // $router.push('/home/reserve')
       }
     }
   }

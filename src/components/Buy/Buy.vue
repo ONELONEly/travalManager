@@ -138,12 +138,12 @@
             </mu-thead>
             <mu-tbody>
               <mu-tr v-for="(order, index) in orderList" :key="index">
-                <mu-td>1</mu-td>
-                <mu-td>2018-02-02</mu-td>
-                <mu-td>机票</mu-td>
-                <mu-td>上海</mu-td>
-                <mu-td>北京</mu-td>
-                <mu-td>审核通过</mu-td>
+                <mu-td>{{order.orderId}}</mu-td>
+                <mu-td>{{order.orderTime}}</mu-td>
+                <mu-td>{{order.orderType}}</mu-td>
+                <mu-td>{{order.fromCity }}</mu-td>
+                <mu-td>{{order.destCity}}</mu-td>
+                <mu-td>{{order.status }}</mu-td>
               </mu-tr>
             </mu-tbody>
           </mu-table>
@@ -221,7 +221,7 @@
       if (this.$store.state.user.loginUser == null) return
       // 获取用户订单
       this.$axios.post('/user/searchOrder',{}).then((res) =>{
-        console.log(res.data)
+        // console.log(res.data)
         this.orderList = res.data.data.orderDTOList
       })
     },
@@ -349,6 +349,11 @@
           }
         }
       }
+    }
+    .mu-td {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 

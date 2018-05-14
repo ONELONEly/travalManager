@@ -15,51 +15,51 @@
         <span style="margin: 0 10px"> - </span>
         <mu-text-field v-model="destinationPlace" hintText="目的地"/>
         <mu-date-picker v-model="departureDate" hintText="出发日期"/>
-        <mu-raised-button class="pt_search_btn" label="查询" primary/>
+        <mu-raised-button class="pt_search_btn" label="查询" primary @click="getPlaneTicketInfo"/>
       </mu-paper>
       <!--机票条目-->
-      <mu-paper class="pt_item">
+      <mu-paper v-for="(airTicket, index) in airTicketWithCostBOList" :key="index" class="pt_item">
         <span class="pt_item_place">
-          北京
+          {{airTicket.airTicketPO.fromCity}}
         </span>
         <!--机场信息盒子-->
         <div class="pt_info_box">
-          <div class="pt_info_time">14:50</div>
-          <div class="pt_info_airport">首都国际机场T1</div>
+          <div class="pt_info_time">{{airTicket.airTicketPO.startTime}}</div>
+          <div class="pt_info_airport">{{airTicket.airTicketPO.fromCity}}</div>
         </div>
         <mu-icon value="arrow_forward"></mu-icon>
         <div class="pt_info_box">
-          <div class="pt_info_time">17:10</div>
-          <div class="pt_info_airport">虹桥国际机场T2</div>
+          <div class="pt_info_time">{{airTicket.airTicketPO.endTime}}</div>
+          <div class="pt_info_airport">{{airTicket.airTicketPO.destCity}}</div>
         </div>
         <span class="pt_item_place">
-          上海
+          {{airTicket.airTicketPO.destCity}}
         </span>
         <!--收起展开按钮-->
         <mu-raised-button class="pt_item_btn" label="收起" labelPosition="before" icon="expand_less" primary/>
         <!--机票列表-->
-        <div class="pt_item_list_box">
+        <div v-for="(airTicketItem, itemIndex) in airTicket.airTicketCostPOList" :key="itemIndex" class="pt_item_list_box">
           <div class="plan_ticket">
-            <span class="plan_ticket_name">经济舱全价</span>
+            <span class="plan_ticket_name">{{airTicketItem.seatType}}</span>
             <!--价格-->
-            <span class="plan_ticket_price">￥3800</span>
+            <span class="plan_ticket_price">￥{{airTicketItem.price}}</span>
             <!--预定按钮-->
-            <mu-raised-button label="预定" class="plan_ticket_order_btn" secondary  @click="$router.push('/home/reserve')"/>
+            <mu-raised-button label="预定" class="plan_ticket_order_btn" secondary  @click="toReserve(airTicket, airTicketItem)"/>
           </div>
-          <div class="plan_ticket">
-            <span class="plan_ticket_name">经济舱9折</span>
-            <!--价格-->
-            <span class="plan_ticket_price">￥3400</span>
-            <!--预定按钮-->
-            <mu-raised-button label="预定" class="plan_ticket_order_btn" secondary @click="$router.push('/home/reserve')"/>
-          </div>
-          <div class="plan_ticket">
-            <span class="plan_ticket_name">经济舱3折</span>
-            <!--价格-->
-            <span class="plan_ticket_price">￥1400</span>
-            <!--预定按钮-->
-            <mu-raised-button label="预定" class="plan_ticket_order_btn" secondary  @click="$router.push('/home/reserve')"/>
-          </div>
+          <!--<div class="plan_ticket">-->
+            <!--<span class="plan_ticket_name">经济舱9折</span>-->
+            <!--&lt;!&ndash;价格&ndash;&gt;-->
+            <!--<span class="plan_ticket_price">￥3400</span>-->
+            <!--&lt;!&ndash;预定按钮&ndash;&gt;-->
+            <!--<mu-raised-button label="预定" class="plan_ticket_order_btn" secondary @click="$router.push('/home/reserve')"/>-->
+          <!--</div>-->
+          <!--<div class="plan_ticket">-->
+            <!--<span class="plan_ticket_name">经济舱3折</span>-->
+            <!--&lt;!&ndash;价格&ndash;&gt;-->
+            <!--<span class="plan_ticket_price">￥1400</span>-->
+            <!--&lt;!&ndash;预定按钮&ndash;&gt;-->
+            <!--<mu-raised-button label="预定" class="plan_ticket_order_btn" secondary  @click="$router.push('/home/reserve')"/>-->
+          <!--</div>-->
         </div>
       </mu-paper>
     </div>
@@ -77,7 +77,7 @@
         destinationPlace: "",
         departureDate: "",
         // 机票信息
-        planeTicketInfo: {}
+        airTicketWithCostBOList: []
       }
     },
     // 页面创建时
@@ -100,8 +100,22 @@
           destCity: this.destinationPlace,
           startDay: this.departureDate
         }).then((res) =>{
-          console.log(res.data)
+          // console.log(res.data.data.airTicketWithCostBOList)
+          this.airTicketWithCostBOList = res.data.data.airTicketWithCostBOList
         })
+      },
+      // 预定
+      toReserve(plane,ticket) {
+        this.$router.push({
+          name: 'reserve',
+          params: {
+            publicOrPrivate: this.publicOrPrivate,
+            type: 'PlaneTicket',
+            plane: plane,
+            ticket: ticket
+          }
+        })
+        // $router.push('/home/reserve')
       }
     }
   }

@@ -59,15 +59,15 @@
             </mu-thead>
             <mu-tbody>
               <mu-tr v-for="item,index in tableData" :key="index" :selected="item.selected">
-                <mu-td>{{item.Order_ID}}</mu-td>
-                <mu-td>{{item.type}}</mu-td>
-                <mu-td><div class="sst">{{item.start_time}}</div></mu-td>
-                <mu-td><div class="sst">{{item.end_time}}</div></mu-td>
-                <mu-td>{{item.start_city}}</mu-td>
-                <mu-td>{{item.dest_city}}</mu-td>
-                <mu-td>{{item.user}}</mu-td>
+                <mu-td>{{item.orderId}}</mu-td>
+                <mu-td>{{item.orderType}}</mu-td>
+                <mu-td><div class="sst">{{item.startTime}}</div></mu-td>
+                <mu-td><div class="sst">{{item.endTime}}</div></mu-td>
+                <mu-td>{{item.fromCity}}</mu-td>
+                <mu-td>{{item.destCity}}</mu-td>
+                <mu-td>{{item.userName}}</mu-td>
                 <mu-td>{{item.price}}</mu-td>
-                <mu-td>{{item.state}}</mu-td>
+                <mu-td>{{item.status}}</mu-td>
                 <mu-td><mu-raised-button label="查看"  @click="$router.push('/home/order_details')"/><br/></mu-td>
 
               </mu-tr>
@@ -89,28 +89,28 @@
       return {
         value: '1',
         tableData: [
-          {
-            Order_ID:'134542213',
-            type: '机票',
-            start_time: '2017-01-02',
-            end_time: '2017-02-01',
-            start_city: '成都',
-            dest_city: '上海',
-            user: '张三',
-            price: '2000',
-            state:'已通过',
-          },
-          {
-            Order_ID:'134542215',
-            type: '酒店',
-            start_time: '2017-01-02 ',
-            end_time: '2017-02-01 ',
-            start_city: '成都',
-            dest_city: '上海',
-            user: '张三',
-            price: '400',
-            state:'已取消',
-          },
+          // {
+          //   Order_ID:'134542213',
+          //   type: '机票',
+          //   start_time: '2017-01-02',
+          //   end_time: '2017-02-01',
+          //   start_city: '成都',
+          //   dest_city: '上海',
+          //   user: '张三',
+          //   price: '2000',
+          //   state:'已通过',
+          // },
+          // {
+          //   Order_ID:'134542215',
+          //   type: '酒店',
+          //   start_time: '2017-01-02 ',
+          //   end_time: '2017-02-01 ',
+          //   start_city: '成都',
+          //   dest_city: '上海',
+          //   user: '张三',
+          //   price: '400',
+          //   state:'已取消',
+          // },
         ],
         fixedHeader: true,
         fixedFooter: false,
@@ -143,6 +143,11 @@
 
 <style lang="scss">
   #order {
+    .mu-td {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     //面包屑样式
     .order_breadcrumb {
       margin: 30px 50px;
