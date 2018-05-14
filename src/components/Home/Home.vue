@@ -2,11 +2,13 @@
   <div id="home">
     <img class="home_bg" src="../../assets/home_bg.jpg">
     <mu-appbar class="home_bar" title="企业差旅管理平台">
-      <mu-flat-button label="出行预定" slot="right" @click="toPath('出行预定')"/>
-      <mu-flat-button label="订单管理" slot="right" @click="toPath('订单管理')"/>
       <mu-flat-button label="审批管理" slot="right" @click="toPath('审批管理')"/>
       <mu-flat-button label="企业管理" slot="right" @click="toPath('企业管理')"/>
+      <mu-flat-button label="出行预定" slot="right" @click="toPath('出行预定')"/>
+      <mu-flat-button label="订单管理" slot="right" @click="toPath('订单管理')"/>
       <img class="home_head" src="../../assets/head_img.png" slot="right" @click="toPath('个人中心')">
+      <img class="home_head" src="../../assets/exit.png" slot="right" @click="toPath('退出')">
+
     </mu-appbar>
     <div class="home_main">
       <router-view/>
@@ -24,7 +26,11 @@
     },
     created(){
       this.$http.post('/loginStatus').then( (res) => {
-        this.$store.commit('setLoginUser',res.data.data);
+        if(res.data.data === null){
+          this.$router.push('/');
+        }else {
+          this.$store.commit('setLoginUser', res.data.data);
+        }
       });
       let postData = JSON.stringify({
         address:'上海'
@@ -57,6 +63,11 @@
         else if (path == '个人中心')
         {
           this.$router.push('/home/selfcenter')
+        }else if(path ==='退出')
+        {
+          this.$http.post('/logout').then((res)=>{
+            this.$router.push('/')
+          });
         }
       }
     }
