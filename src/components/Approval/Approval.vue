@@ -9,13 +9,8 @@
 
     <div class="box">
       <div class="menu">
-        <mu-paper class="demo-menu">
-          <mu-menu>
-            <mu-menu-item title="已审批"/>
-            <mu-menu-item title="待审批"/>
-            <mu-menu-item title=" "/>
-          </mu-menu>
-        </mu-paper>
+        <mu-flat-button label="已审批" style="width: 100%;height: 50px;line-height: 50px"/>
+        <mu-flat-button label="待审批" style="width: 100%;height: 50px;line-height: 50px"/>
 
       </div>
       <div class="content">

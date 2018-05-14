@@ -10,14 +10,16 @@
     <!--主体内容盒子-->
     <div class="order_box">
       <div class="order_muse">
+        <mu-flat-button label="因私订单" style="width: 100%;height: 50px;line-height: 50px"/>
+        <mu-flat-button label="因公订单" style="width: 100%;height: 50px;line-height: 50px"/>
         <!--右侧菜单-->
-        <mu-paper class="order_right_muse">
-          <mu-menu>
-            <mu-menu-item title="因私订单"/>
-            <mu-menu-item title="因公订单"/>
-            <mu-menu-item title=" "/>
-          </mu-menu>
-        </mu-paper>
+        <!--<mu-paper class="order_right_muse">-->
+          <!--<mu-menu>-->
+            <!--<mu-menu-item title="因私订单"/>-->
+            <!--<mu-menu-item title="因公订单"/>-->
+            <!--<mu-menu-item title=" "/>-->
+          <!--</mu-menu>-->
+        <!--</mu-paper>-->
       </div>
       <!--左侧内容-->
       <div class="order_content">

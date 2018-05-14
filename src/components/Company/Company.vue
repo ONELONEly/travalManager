@@ -11,14 +11,16 @@
     <!--主体内容盒子-->
     <div class="company_box">
       <div class="company_muse">
+        <mu-flat-button label="组织架构管理" style="width: 100%;height: 50px;line-height: 50px" @click="product_search_tab_select = 'department'"/>
+        <mu-flat-button label="差旅级别管理" style="width: 100%;height: 50px;line-height: 50px" @click="product_search_tab_select = 'leval'"/>
         <!--右侧菜单-->
-        <mu-paper class="company_right_muse">
-          <mu-menu>
-            <mu-menu-item title="组织架构管理" @click="product_search_tab_select = 'department'"/>
-            <mu-menu-item title="差旅级别管理" @click="product_search_tab_select = 'leval'"/>
-            <mu-menu-item title=" "/>
-          </mu-menu>
-        </mu-paper>
+        <!--<mu-paper class="company_right_muse">-->
+          <!--<mu-menu>-->
+            <!--<mu-menu-item title="组织架构管理" @click="product_search_tab_select = 'department'"/>-->
+            <!--<mu-menu-item title="差旅级别管理" @click="product_search_tab_select = 'leval'"/>-->
+            <!--<mu-menu-item title=" "/>-->
+          <!--</mu-menu>-->
+        <!--</mu-paper>-->
       </div>
       <!--左侧内容-->
       <div class="company_content">

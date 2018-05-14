@@ -10,20 +10,13 @@
     <!--主体内容盒子-->
     <div class="self_box">
       <div class="self_muse">
-        <!--右侧菜单-->
-        <mu-paper class="self_right_muse">
-          <mu-menu>
-            <mu-menu-item title="个人信息" @click="product_search_tab_select = 'info'"/>
-            <mu-menu-item title="差旅标准" @click="product_search_tab_select = 'clbz'"/>
-            <mu-menu-item title=" 常用旅客" @click="product_search_tab_select = 'cylk'"/>
-            <mu-menu-item title=" 常用地址" @click="product_search_tab_select = 'cydz'"/>
-          </mu-menu>
-        </mu-paper>
+        <mu-flat-button label="个人信息" style="width: 100%;height: 50px;line-height: 50px" @click="product_search_tab_select = 'info'"/>
+        <mu-flat-button label="差旅标准" style="width: 100%;height: 50px;line-height: 50px" @click="product_search_tab_select = 'clbz'"/>
+        <mu-flat-button label="常用旅客" style="width: 100%;height: 50px;line-height: 50px" @click="product_search_tab_select = 'cylk'"/>
+        <mu-flat-button label="常用地址" style="width: 100%;height: 50px;line-height: 50px" @click="product_search_tab_select = 'cydz'"/>
       </div>
       <!--左侧内容-->
       <div class="self_content">
-
-
         <mu-col class="product_search_box_content" width="70" tablet="70" desktop="70">
           <!--个人信息-->
           <div v-if="product_search_tab_select === 'info'">
@@ -334,11 +327,11 @@
         background-color: white;
         margin-left: 100px;
         border-radius: 5px;
-        .self_right_muse {
-          display: inline-block;
-          margin: 10px 50px 0 0;
-          width: 168px;
-        }
+        /*.self_right_muse {*/
+          /*display: inline-block;*/
+          /*margin: 10px 50px 10px 0;*/
+          /*width: 168px;*/
+        /*}*/
       }
       //右侧内容样式
       .self_content {
@@ -408,6 +401,5 @@
 
       }
     }
-
   }
 </style>
