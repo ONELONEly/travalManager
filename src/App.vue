@@ -6,7 +6,19 @@
 
 <script>
   export default {
-    name: 'App'
+    name: 'App',
+    data(){
+      return {
+        status:false
+      }
+    },
+    created(){
+      this.$http.post("/loginStatus").then((res) => {
+        if(res.data.data === null){
+          this.$router.push('/');
+        }
+      });
+    }
   }
 </script>
 
