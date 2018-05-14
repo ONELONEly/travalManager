@@ -24,9 +24,7 @@
               <mu-table :showCheckbox="false">
                 <mu-thead>
                   <mu-tr>
-
                     <mu-th style="text-align: center" class="my_standard_item_name">个人信息</mu-th>
-
                   </mu-tr>
                 </mu-thead>
                 <mu-tbody>
@@ -131,6 +129,7 @@
                     <mu-td >姓名</mu-td>
                     <mu-td >电话</mu-td>
                     <mu-td >身份证号</mu-td>
+                    <mu-td >性别</mu-td>
                   </mu-tr>
                 </mu-thead>
                 <mu-tbody v-for="alwaysUser in alwaysUsers">
@@ -138,6 +137,7 @@
                     <mu-td >{{alwaysUser.name}}</mu-td>
                     <mu-td >{{alwaysUser.phone}}</mu-td>
                     <mu-td >{{alwaysUser.number}}</mu-td>
+                    <mu-td >{{alwaysUser.sex}}</mu-td>
                   </mu-tr>
                 </mu-tbody>
                 <mu-tr class="button_self">
@@ -189,18 +189,22 @@
               <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">身份证号：</mu-col>
               <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入身份证号" v-model="number"/></mu-col>
             </mu-row>
+
+            <mu-row gutter>
+              <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">性别：</mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-radio label="男" name="group" nativeValue="男" v-model="sex_insert" class="demo-radio"/>
+                <mu-radio label="女" name="group" nativeValue="女" v-model="sex_insert"  class="demo-radio"/> </mu-col>
+            </mu-row>
             <mu-flat-button slot="actions" @click="dialog1 = false" primary label="取消"/>
-            <mu-flat-button slot="actions" primary @click="insertAlwaysUser()" label="确定"/>
+            <mu-flat-button slot="actions" primary @click="insertAlwaysUser" label="确定"/>
           </mu-dialog>
           <mu-dialog :open="dialog2" title="添加常用地址" @close="dialog2 = false">
-
             <mu-row gutter>
               <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">地址：</mu-col>
               <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入地址" v-model="addr"/></mu-col>
             </mu-row>
-
             <mu-flat-button slot="actions" @click="dialog2 = false" primary label="取消"/>
-            <mu-flat-button slot="actions"  @click="insertAlwaysAddr()" label="确定"/>
+            <mu-flat-button slot="actions"  @click="insertAlwaysAddr" label="确定"/>
           </mu-dialog>
           <mu-dialog :open="dialog3" title="编辑个人信息" @close="dialog3 = false">
             <mu-row gutter>
@@ -219,13 +223,9 @@
             <mu-flat-button slot="actions" @click="dialog3 = false" primary label="取消"/>
             <mu-flat-button slot="actions"  @click="dialog3 = false" label="确定"/>
           </mu-dialog>
-
         </mu-col>
-
-
       </div>
     </div>
-    .
   </div>
 </template>
 
@@ -237,10 +237,8 @@
         dialog1:false,
         dialog2:false,
         dialog3:false,
+        sex_insert:'',
         product_search_tab_select: 'info',
-        product_search_tab_select: 'clbz',
-        product_search_tab_select: 'cylk',
-        product_search_tab_select: 'cydz',
         userMessage:null,
         airTicketStage:null,
         hotelStage:null,
@@ -273,11 +271,12 @@
         this.$refs.table.unSelectAll()
       },
       insertAlwaysUser(){
-        this.$http.post("/user/insertAlwaysUser",{headers:{'contentType':'application/json'}},JSON.stringify({
-          name:this.name,
-          phone:this.phone,
-          number:this.number
-        })).then((res) => {
+        this.$http.post("/user/insertAlwaysUser", {
+          name: this.name,
+          phone: this.phone,
+          number: this.number,
+          sex:this.sex_insert
+        },{headers:{'contentType':'application/json'}}).then((res) => {
           if(res.data.code === 200){
             this.dialog1 = false;
             this.queryAlwaysUser();
@@ -287,7 +286,16 @@
         });
       },
       insertAlwaysAddr(){
-        this.dialog2 = false;
+        this.$http.post("/user/insertAlwaysAddr", {
+          address: this.addr
+        },{headers:{'contentType':'application/json'}}).then((res) => {
+          if(res.data.code === 200){
+            this.dialog2 = false;
+            this.queryAlwaysAddr();
+          }else{
+            alert(res.data.msg);
+          }
+        });
       },
       queryAlwaysUser(){
         this.$http.post('/user/queryAlwaysUser',this.$qs.stringify({page:1,limit:10})).then((res) =>{
