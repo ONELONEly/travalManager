@@ -1,14 +1,16 @@
 <template>
   <div id="home">
     <img class="home_bg" src="../../assets/home_bg.jpg">
-    <mu-appbar class="home_bar" title="企业差旅管理平台">
-      <mu-flat-button label="审批管理" slot="right" @click="toPath('审批管理')"/>
-      <mu-flat-button label="企业管理" slot="right" @click="toPath('企业管理')"/>
+    <mu-appbar class="home_bar" v-if="isManager" title="企业差旅管理平台">
+        <mu-flat-button label="审批管理" slot="right" @click="toPath('审批管理')"/>
+        <mu-flat-button label="企业管理" slot="right" @click="toPath('企业管理')"/>
+      <img class="home_head" src="../../assets/exit.png" slot="right" @click="toPath('退出')">
+    </mu-appbar>
+    <mu-appbar class="home_bar" v-else title="企业差旅管理平台">
       <mu-flat-button label="出行预定" slot="right" @click="toPath('出行预定')"/>
       <mu-flat-button label="订单管理" slot="right" @click="toPath('订单管理')"/>
       <img class="home_head" src="../../assets/head_img.png" slot="right" @click="toPath('个人中心')">
       <img class="home_head" src="../../assets/exit.png" slot="right" @click="toPath('退出')">
-
     </mu-appbar>
     <div class="home_main">
       <router-view/>
@@ -22,6 +24,7 @@
     // 数据
     data() {
       return {
+        isManager:false
       }
     },
     created(){
@@ -29,7 +32,11 @@
         if(res.data.data === null){
           this.$router.push('/');
         }else {
+          this.isManager = res.data.data.isManager;
           this.$store.commit('setLoginUser', res.data.data);
+          if(this.isManager){
+            this.$router.push("/home/approval");
+          }
         }
       });
       let postData = JSON.stringify({
