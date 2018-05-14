@@ -108,7 +108,7 @@
                   <mu-col width="25" tablet="25" desktop="25">
                   </mu-col>
                   <mu-col width="75" tablet="75" desktop="75">
-                    <mu-raised-button label="搜索" primary/>
+                    <mu-raised-button label="搜索" primary @click="$router.push('/home/hotel')"/>
                   </mu-col>
                 </mu-row>
               </div>

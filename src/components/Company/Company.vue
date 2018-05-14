@@ -3,7 +3,6 @@
     <!--地址-->
     <mu-breadcrumb class="company_breadcrumb">
       <mu-breadcrumb-item href="javascript:void(0)">
-        <mu-icon value="home" :size="16"/>
         首页
       </mu-breadcrumb-item>
       <mu-breadcrumb-item href="javascript:void(0)">企业管理</mu-breadcrumb-item>
@@ -250,7 +249,29 @@
                 </mu-dialog>
                 <!----添加弹出框--->
                 <mu-dialog :open="add_userleval" title="添加差旅级别" @close="add_userleval = false">
-                  你确认要编辑此员工吗？
+                  <mu-row gutter>
+                    <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">级别名称：</mu-col>
+                    <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText=""/></mu-col>
+                  </mu-row>
+                  <mu-row gutter>
+                    <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">一级城市：</mu-col>
+                    <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText=""/>元/间夜</mu-col>
+                  </mu-row>
+                  <mu-row gutter>
+                    <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">二级城市：</mu-col>
+                    <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText=""/>元/间夜</mu-col>
+                  </mu-row>
+                  <mu-row gutter>
+                    <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">其他城市：</mu-col>
+                    <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText=""/>元/间夜</mu-col>
+                  </mu-row>
+
+                  <mu-row gutter>
+                    <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">可否违规：</mu-col>
+                    <mu-col width="80" tablet="80" desktop="80"> <mu-radio label="可违规预定" name="group" nativeValue="simple1" v-model="add_choose_value" class="demo-radio"/>
+                      <mu-radio label="不可违规预定" name="group" nativeValue="simple2" v-model="add_choose_value"  class="demo-radio"/> <br/>
+                    </mu-col>
+                  </mu-row>
                   <mu-flat-button slot="actions" @click="add_userleval = false" primary label="取消"/>
                   <mu-flat-button slot="actions" primary @click="add_userleval = false" label="确定"/>
                 </mu-dialog>
@@ -278,6 +299,7 @@
 
               <!----编辑弹出框--->
               <mu-dialog :open="edit_fly_userleval" title="编辑差旅级别" @close="edit_fly_userleval = false">
+
                 <mu-row gutter>
 
                   <mu-col width="100" tablet="100" desktop="100">出发前后<mu-text-field hintText="60"/>分钟内最低价航班</mu-col>
@@ -303,7 +325,30 @@
               </mu-dialog>
               <!----添加弹出框--->
               <mu-dialog :open="add_fly_userleval" title="添加差旅级别" @close="add_fly_userleval = false">
-                你确认要编辑此员工吗？
+                <mu-row gutter>
+                  <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">级别名称：</mu-col>
+                  <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText=""/></mu-col>
+                </mu-row>
+                <mu-row gutter>
+
+                  <mu-col width="100" tablet="100" desktop="100">出发前后<mu-text-field hintText=""/>分钟内最低价航班</mu-col>
+                </mu-row>
+                <mu-row gutter>
+                  <mu-col width="100" tablet="100" desktop="100">提前<mu-text-field hintText=""/>天以上预定航班</mu-col>
+                </mu-row>
+                <mu-row gutter>
+                  <mu-col width="100" tablet="100" desktop="100"><mu-text-field hintText=""/>折以下航班</mu-col>
+                </mu-row>
+                <mu-row gutter>
+                  <mu-col width="100" tablet="100" desktop="100"><mu-text-field hintText=""/>以下航班</mu-col>
+                </mu-row>
+
+                <mu-row gutter>
+                  <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">可否违规：</mu-col>
+                  <mu-col width="80" tablet="80" desktop="80"> <mu-radio label="可违规预定" name="group" nativeValue="simple1" v-model="add_choose_value2" class="demo-radio"/>
+                    <mu-radio label="不可违规预定" name="group" nativeValue="simple2" v-model="add_choose_value2"  class="demo-radio"/> <br/>
+                  </mu-col>
+                </mu-row>
                 <mu-flat-button slot="actions" @click="add_fly_userleval = false" primary label="取消"/>
                 <mu-flat-button slot="actions" primary @click="add_fly_userleval = false" label="确定"/>
               </mu-dialog>
@@ -335,8 +380,10 @@
         sex_value1:'',
         sex_value2:'',
         choose_value:'',
+        add_choose_value:'',
         choose_value2:'',
         choose_leval:'1',
+        add_choose_value2:'',
         hotel_leval_manager:'1',
         fly_leval_manager:'1',
         value: '',

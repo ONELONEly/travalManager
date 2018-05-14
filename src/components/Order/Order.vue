@@ -3,7 +3,6 @@
     <!--地址-->
     <mu-breadcrumb class="order_breadcrumb">
       <mu-breadcrumb-item href="javascript:void(0)">
-        <mu-icon value="home" :size="16"/>
         首页
       </mu-breadcrumb-item>
       <mu-breadcrumb-item href="javascript:void(0)">订单管理</mu-breadcrumb-item>
@@ -67,7 +66,7 @@
                 <mu-td>{{item.user}}</mu-td>
                 <mu-td>{{item.price}}</mu-td>
                 <mu-td>{{item.state}}</mu-td>
-                <mu-td>{{item.operation}}</mu-td>
+                <mu-td><mu-raised-button label="查看"  @click="$router.push('/home/order_details')"/><br/></mu-td>
 
               </mu-tr>
             </mu-tbody>
@@ -98,7 +97,7 @@
             user: '张三',
             price: '2000',
             state:'已通过',
-            operation:''
+
 
           },
           {
@@ -111,7 +110,7 @@
             user: '张三',
             price: '400',
             state:'已取消',
-            operation:''
+
 
           },
 

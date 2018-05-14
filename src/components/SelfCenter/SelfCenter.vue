@@ -2,7 +2,7 @@
   <div id="self">
     <mu-breadcrumb class="self_breadcrumb">
       <mu-breadcrumb-item href="javascript:void(0)">
-        <mu-icon value="home" :size="16"/>
+
         首页
       </mu-breadcrumb-item>
       <mu-breadcrumb-item href="javascript:void(0)">个人中心</mu-breadcrumb-item>
@@ -185,15 +185,16 @@
 
             <mu-row gutter>
               <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">姓名：</mu-col>
-              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入姓名" v-model="name"/><br/></mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入姓名" v-model="name"/></mu-col>
             </mu-row>
             <mu-row gutter>
               <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">电话：</mu-col>
-              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入电话号码" v-model="phone"/><br/></mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入电话号码" v-model="phone"/></mu-col>
             </mu-row>
+
             <mu-row gutter>
               <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">身份证号：</mu-col>
-              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入身份证号" v-model="number"/><br/></mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入身份证号" v-model="number"/></mu-col>
             </mu-row>
             <mu-flat-button slot="actions" @click="dialog1 = false" primary label="取消"/>
             <mu-flat-button slot="actions" primary @click="insertAlwaysUser()" label="确定"/>
@@ -202,7 +203,7 @@
 
             <mu-row gutter>
               <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">地址：</mu-col>
-              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入地址" v-model="addr"/><br/></mu-col>
+              <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="输入地址" v-model="addr"/></mu-col>
             </mu-row>
 
             <mu-flat-button slot="actions" @click="dialog2 = false" primary label="取消"/>
