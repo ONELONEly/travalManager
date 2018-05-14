@@ -99,8 +99,6 @@
             user: '张三',
             price: '2000',
             state:'已通过',
-
-
           },
           {
             Order_ID:'134542215',
@@ -112,11 +110,7 @@
             user: '张三',
             price: '400',
             state:'已取消',
-
-
           },
-
-
         ],
         fixedHeader: true,
         fixedFooter: false,
@@ -126,9 +120,14 @@
         showCheckbox: false,
         height: '300px'
       }
-
     },
-
+    created() {
+      // 获取用户订单
+      this.$axios.post('/user/searchOrder',{}).then((res) =>{
+        console.log(res.data)
+        this.tableData = res.data.data.orderDTOList
+      })
+    },
     methods: {
       handleChange(value) {
         this.value = value

@@ -29,7 +29,7 @@
                     <span style="font-size: 16px;height: 30px;line-height: 30px">出行类型</span>
                   </mu-col>
                   <mu-col width="75" tablet="75" desktop="75">
-                    <mu-radio label="因公" name="group" nativeValue="public" v-model="publicOrPrivate"/>
+                    <mu-radio label="因公" name="group" nativeValue="business" v-model="publicOrPrivate"/>
                     <mu-radio label="因私" name="group" nativeValue="private" v-model="publicOrPrivate"/>
                   </mu-col>
                 </mu-row>
@@ -39,9 +39,9 @@
                     <span style="font-size: 16px;height: 56px;line-height: 56px">去返城市</span>
                   </mu-col>
                   <mu-col width="75" tablet="75" desktop="75">
-                    <mu-text-field class="product_search_input" hintText="起始地"/>
+                    <mu-text-field v-model="originPlace" class="product_search_input" hintText="起始地"/>
                     <span style="margin: 0 5px">-</span>
-                    <mu-text-field class="product_search_input" hintText="目的地"/>
+                    <mu-text-field v-model="destinationPlace" class="product_search_input" hintText="目的地"/>
                   </mu-col>
                 </mu-row>
                 <!--出发日期-->
@@ -50,7 +50,7 @@
                     <span style="font-size: 16px;height: 56px;line-height: 56px">出发日期</span>
                   </mu-col>
                   <mu-col width="75" tablet="75" desktop="75">
-                    <mu-date-picker class="product_search_input" hintText="选择日期"/>
+                    <mu-date-picker v-model="departureDate" class="product_search_input" hintText="选择日期"/>
                   </mu-col>
                 </mu-row>
                 <!--搜索按钮-->
@@ -58,7 +58,7 @@
                   <mu-col width="25" tablet="25" desktop="25">
                   </mu-col>
                   <mu-col width="75" tablet="75" desktop="75">
-                    <mu-raised-button label="搜索" primary @click="$router.push('/home/plane-ticket')"/>
+                    <mu-raised-button label="搜索" primary @click="toPlaneTicket"/>
                   </mu-col>
                 </mu-row>
               </div>
@@ -70,7 +70,7 @@
                     <span style="font-size: 16px;height: 30px;line-height: 30px">出行类型</span>
                   </mu-col>
                   <mu-col width="75" tablet="75" desktop="75">
-                    <mu-radio label="因公" name="group" nativeValue="public" v-model="publicOrPrivate"/>
+                    <mu-radio label="因公" name="group" nativeValue="business" v-model="publicOrPrivate"/>
                     <mu-radio label="因私" name="group" nativeValue="private" v-model="publicOrPrivate"/>
                   </mu-col>
                 </mu-row>
@@ -80,7 +80,7 @@
                     <span style="font-size: 16px;height: 56px;line-height: 56px">目的地</span>
                   </mu-col>
                   <mu-col width="75" tablet="75" desktop="75">
-                    <mu-text-field class="product_search_input" hintText="地点"/>
+                    <mu-text-field v-model="hotelPlace" class="product_search_input" hintText="地点"/>
                   </mu-col>
                 </mu-row>
                 <!--入住时间-->
@@ -89,9 +89,9 @@
                     <span style="font-size: 16px;height: 56px;line-height: 56px">入住时间</span>
                   </mu-col>
                   <mu-col width="75" tablet="75" desktop="75">
-                    <mu-date-picker class="product_search_input" hintText="入住"/>
+                    <mu-date-picker v-model="checkInTime" class="product_search_input" hintText="入住"/>
                     <span style="margin: 0 5px">-</span>
-                    <mu-date-picker class="product_search_input" hintText="离开"/>
+                    <mu-date-picker v-model="leaveTime" class="product_search_input" hintText="离开"/>
                   </mu-col>
                 </mu-row>
                 <!--关键字-->
@@ -100,7 +100,7 @@
                     <span style="font-size: 16px;height: 56px;line-height: 56px">关键字</span>
                   </mu-col>
                   <mu-col width="75" tablet="75" desktop="75">
-                    <mu-text-field hintText="如位置\酒店名\品牌"/>
+                    <mu-text-field v-model="hotelKey" hintText="如位置\酒店名\品牌"/>
                   </mu-col>
                 </mu-row>
                 <!--搜索按钮-->
@@ -108,7 +108,7 @@
                   <mu-col width="25" tablet="25" desktop="25">
                   </mu-col>
                   <mu-col width="75" tablet="75" desktop="75">
-                    <mu-raised-button label="搜索" primary @click="$router.push('/home/hotel')"/>
+                    <mu-raised-button label="搜索" primary @click="toHotel"/>
                   </mu-col>
                 </mu-row>
               </div>
@@ -137,7 +137,7 @@
               </mu-tr>
             </mu-thead>
             <mu-tbody>
-              <mu-tr>
+              <mu-tr v-for="(order, index) in orderList" :key="index">
                 <mu-td>1</mu-td>
                 <mu-td>2018-02-02</mu-td>
                 <mu-td>机票</mu-td>
@@ -197,7 +197,18 @@
         // 更多文字
         moreText: '更多 >',
         airTicketStage:null,
-        hotelStage:null
+        hotelStage:null,
+        // 订单列表
+        orderList: [],
+        // 飞机票
+        originPlace: "",
+        destinationPlace: "",
+        departureDate: "",
+        // 酒店
+        hotelPlace: "",
+        checkInTime: "",
+        leaveTime: "",
+        hotelKey: ""
       }
     },
     created(){
@@ -207,6 +218,12 @@
           this.hotelStage = res.data.data.hotelStage;
         }
       })
+      if (this.$store.state.user.loginUser == null) return
+      // 获取用户订单
+      this.$axios.post('/user/searchOrder',{}).then((res) =>{
+        console.log(res.data)
+        this.orderList = res.data.data.orderDTOList
+      })
     },
     methods: {
       handleTabChange(val) {
@@ -214,6 +231,29 @@
       },
       handleActive() {
         window.alert('tab active')
+      },
+      toPlaneTicket() {
+        this.$router.push({
+          name: 'plane-ticket',
+          params: {
+            publicOrPrivate: this.publicOrPrivate,
+            originPlace: this.originPlace,
+            destinationPlace: this.destinationPlace,
+            departureDate: this.departureDate
+          }
+        })
+      },
+      toHotel() {
+        this.$router.push({
+          name: 'hotel',
+          params: {
+            publicOrPrivate: this.publicOrPrivate,
+            hotelPlace: this.hotelPlace,
+            checkInTime: this.checkInTime,
+            leaveTime: this.leaveTime,
+            hotelKey: this.hotelKey
+          }
+        })
       }
     }
   }

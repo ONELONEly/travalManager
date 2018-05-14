@@ -27,18 +27,29 @@
         isManager:false
       }
     },
-    created(){
-      this.$http.post('/loginStatus').then( (res) => {
-        if(res.data.data === null){
-          this.$router.push('/');
+    created() {
+      let userLogin = this.$store.state.user.loginUser;
+      if (userLogin != null) {
+        this.isManager = userLogin.isManager;
+        if(this.isManager){
+          this.$router.push("/home/approval");
         }else {
-          this.isManager = res.data.data.isManager;
-          this.$store.commit('setLoginUser', res.data.data);
-          if(this.isManager){
-            this.$router.push("/home/approval");
-          }
+          this.$router.push("/home/buy");
         }
-      });
+      }else {
+        this.$http.post('/loginStatus').then( (res) => {
+          if(res.data.data === null){
+            this.$router.push('/');
+          }else {
+            this.$store.commit('setLoginUser', res.data.data);
+            if (this.$store.state.user.loginUser.isManager){
+              this.$router.push("/home/approval");
+            }else {
+              this.$router.push("/home/buy");
+            }
+          }
+        });
+      }
       let postData = JSON.stringify({
         address:'上海'
       });

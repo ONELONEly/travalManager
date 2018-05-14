@@ -41,14 +41,14 @@
         <div class="reserve_content">
           <div class="reserve_item">
             <span class="reserve_label">姓名：</span>
-            <span class="reserve_label">张三</span>
+            <span class="reserve_label">{{user.dsca}}</span>
             <span class="reserve_label_divide"></span>
             <span class="reserve_label">电话：</span>
-            <span class="reserve_label">13333333333</span>
+            <span class="reserve_label">{{user.phone}}</span>
           </div>
           <div class="reserve_item">
-            <span class="reserve_label">身份证：</span>
-            <span class="reserve_label">511025197412458540</span>
+            <span class="reserve_label">邮箱：</span>
+            <span class="reserve_label">{{user.email}}</span>
           </div>
           <div class="reserve_item">
             <span class="reserve_label">部门：</span>
@@ -60,7 +60,7 @@
           </div>
           <div class="reserve_item">
             <span class="reserve_label">请输入出行理由：</span>
-            <mu-text-field hintText="出行理由"/>
+            <mu-text-field v-model="travelReason" hintText="出行理由"/>
           </div>
         </div>
       </mu-paper>
@@ -78,7 +78,7 @@
           </div>
           <div class="reserve_item">
             <span class="reserve_label">请输入违规理由：</span>
-            <mu-text-field hintText="违规理由"/>
+            <mu-text-field v-model="breachReason" hintText="违规理由"/>
           </div>
         </div>
       </mu-paper>
@@ -89,7 +89,22 @@
 
 <script>
   export default {
-    name: 'reserve'
+    name: 'reserve',
+    // 数据
+    data() {
+      return {
+        // 出行原因
+        travelReason: "",
+        // 违规原因
+        breachReason: ""
+      }
+    },
+    // 计算变量
+    computed: {
+      user() {
+        return this.$store.state.user.loginUser.user;
+      }
+    }
   }
 </script>
 

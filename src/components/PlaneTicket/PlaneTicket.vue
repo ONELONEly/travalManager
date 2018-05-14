@@ -11,10 +11,10 @@
     <div class="pt_main">
       <!--搜索框-->
       <mu-paper class="pt_search_box" :zDepth="2">
-        <mu-text-field hintText="出发地"/>
+        <mu-text-field v-model="originPlace" hintText="出发地"/>
         <span style="margin: 0 10px"> - </span>
-        <mu-text-field hintText="目的地"/>
-        <mu-date-picker hintText="出发日期"/>
+        <mu-text-field v-model="destinationPlace" hintText="目的地"/>
+        <mu-date-picker v-model="departureDate" hintText="出发日期"/>
         <mu-raised-button class="pt_search_btn" label="查询" primary/>
       </mu-paper>
       <!--机票条目-->
@@ -68,7 +68,42 @@
 
 <script>
   export default {
-    name: 'PlaneTicket'
+    name: 'PlaneTicket',
+    // 数据
+    data() {
+      return {
+        publicOrPrivate: "",
+        originPlace: "",
+        destinationPlace: "",
+        departureDate: "",
+        // 机票信息
+        planeTicketInfo: {}
+      }
+    },
+    // 页面创建时
+    created() {
+      this.publicOrPrivate = this.$route.params.publicOrPrivate
+      this.originPlace = this.$route.params.originPlace
+      this.destinationPlace = this.$route.params.destinationPlace
+      this.departureDate = this.$route.params.departureDate
+      // 获取机票信息
+      this.getPlaneTicketInfo()
+    },
+    // 方法
+    methods: {
+      // 获取机票信息
+      getPlaneTicketInfo() {
+        // 获取用户订单
+        this.$axios.post('/airTicket/search',{
+          type: this.publicOrPrivate,
+          fromCity: this.originPlace,
+          destCity: this.destinationPlace,
+          startDay: this.departureDate
+        }).then((res) =>{
+          console.log(res.data)
+        })
+      }
+    }
   }
 </script>
 

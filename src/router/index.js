@@ -18,7 +18,7 @@ export default new Router({
         {
           path: "/home/",
           name: "index",
-          redirect: "buy"
+          rcomponent: require('@/components/Empty/Empty').default
         },
         {
           path: 'buy',

@@ -11,10 +11,10 @@
     <div class="pt_main">
       <!--搜索框-->
       <mu-paper class="pt_search_box" :zDepth="2">
-        <mu-text-field hintText="目的地"/>
-        <mu-date-picker hintText="入住时间"/>
+        <mu-text-field v-model="hotelPlace" hintText="目的地"/>
+        <mu-date-picker v-model="checkInTime" hintText="入住时间"/>
         <span style="margin: 0 10px"> - </span>
-        <mu-date-picker hintText="离开时间"/>
+        <mu-date-picker v-model="leaveTime" hintText="离开时间"/>
         <mu-raised-button class="pt_search_btn" label="查询" primary/>
       </mu-paper>
       <!--机票条目-->
@@ -58,7 +58,40 @@
 
 <script>
   export default {
-    name: "Hotel"
+    name: "Hotel",
+    // 数据
+    data() {
+      return {
+        publicOrPrivate: "",
+        hotelPlace: "",
+        checkInTime: "",
+        leaveTime: "",
+        hotelKey: ""
+      }
+    },
+    // 页面创建时
+    created() {
+      this.publicOrPrivate = this.$route.params.publicOrPrivate
+      this.hotelPlace = this.$route.params.hotelPlace
+      this.checkInTime = this.$route.params.checkInTime
+      this.leaveTime = this.$route.params.leaveTime
+      this.hotelKey = this.$route.params.hotelKey
+      // 获取机票信息
+      this.getHotelInfo()
+    },
+    // 方法
+    methods: {
+      // 获取酒店信息
+      getHotelInfo() {
+        // 获取用户订单
+        this.$axios.post('/hotel/search',{
+          type: this.publicOrPrivate,
+          hotelCity: this.hotelPlace
+        }).then((res) =>{
+          console.log(res.data)
+        })
+      }
+    }
   }
 </script>
 
