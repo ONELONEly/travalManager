@@ -17,8 +17,8 @@ export default new Router({
       children: [
         {
           path: "/home/",
-          name: "index",
-          rcomponent: require('@/components/Empty/Empty').default
+          name: "judge-user",
+          component: require('@/components/JudgeUser/JudgeUser').default
         },
         {
           path: 'buy',

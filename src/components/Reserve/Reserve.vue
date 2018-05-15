@@ -89,7 +89,7 @@
 
 <script>
   export default {
-    name: 'reserve',
+    name: 'Reserve',
     // 页面创建时
     created() {
       this.publicOrPrivate = this.$route.params.publicOrPrivate
