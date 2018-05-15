@@ -21,68 +21,75 @@
             <mu-menu-item value="3" title="机票订单"/>
           </mu-dropDown-menu>
 
-          <mu-text-field class="search" hintText="请输入订单号"/>
-          <mu-text-field class="search" hintText="请输入出行人姓名"/>
+          <mu-text-field v-model="orderSearchKey" class="search" hintText="请输入订单号"/>
+          <mu-text-field v-model="nameSearchKey" class="search" hintText="请输入出行人姓名"/>
 
           <mu-raised-button label="搜索" class="demo-raised-button" 搜索/>
         </div>
 
-          <div class="approval_table">
-            <mu-table :fixedFooter="fixedFooter" :fixedHeader="fixedHeader" :height="height"
-                      :enableSelectAll="enableSelectAll" :multiSelectable="multiSelectable"
-                      :selectable="selectable" :showCheckbox="showCheckbox">
-              <mu-thead slot="header">
-                <mu-tr>
-                  <mu-th tooltip="approval_ID">订单号</mu-th>
-                  <mu-th tooltip="type">产品类型</mu-th>
-                  <mu-th tooltip="start_time">开始时间</mu-th>
-                  <mu-th tooltip="end_time">结束时间</mu-th>
-                  <mu-th tooltip="start_city">出发城市</mu-th>
-                  <mu-th tooltip="dest_city">到达城市</mu-th>
-                  <mu-th tooltip="user">出行人</mu-th>
-                  <mu-th tooltip="price">价格</mu-th>
-                  <mu-th tooltip="state">状态</mu-th>
-                  <mu-th tooltip="operation">操作</mu-th>
+        <div class="approval_table">
+          <mu-table :fixedFooter="fixedFooter" :fixedHeader="fixedHeader" :height="height"
+                    :enableSelectAll="enableSelectAll" :multiSelectable="multiSelectable"
+                    :selectable="selectable" :showCheckbox="showCheckbox">
+            <mu-thead slot="header">
+              <mu-tr>
+                <mu-th tooltip="approval_ID">订单号</mu-th>
+                <mu-th tooltip="type">产品类型</mu-th>
+                <mu-th tooltip="start_time">开始时间</mu-th>
+                <mu-th tooltip="end_time">结束时间</mu-th>
+                <mu-th tooltip="start_city">出发城市</mu-th>
+                <mu-th tooltip="dest_city">到达城市</mu-th>
+                <mu-th tooltip="user">出行人</mu-th>
+                <mu-th tooltip="price">价格</mu-th>
+                <mu-th tooltip="state">状态</mu-th>
+                <mu-th tooltip="operation">操作</mu-th>
 
 
-                </mu-tr>
-              </mu-thead>
-              <mu-tbody>
-                <mu-tr v-for="item,index in tableData" :key="index" :selected="item.selected">
-                  <mu-td>{{ item.approval_ID}}</mu-td>
-                  <mu-td>{{item.type}}</mu-td>
-                  <mu-td><div class="sst">{{item.start_time}}</div></mu-td>
-                  <mu-td><div class="sst">{{item.end_time}}</div></mu-td>
-                  <mu-td>{{item.start_city}}</mu-td>
-                  <mu-td>{{item.dest_city}}</mu-td>
-                  <mu-td>{{item.user}}</mu-td>
-                  <mu-td>{{item.price}}</mu-td>
-                  <mu-td>{{item.state}}</mu-td>
-                  <mu-td>
-                    <mu-raised-button label="查看详情" @click="$router.push('/home/order_details')"/><br/>
-                    <mu-raised-button label="通过"  @click="accept = true"/><br/>
-                    <mu-raised-button label="驳回" @click="reject = true"/>
-                  </mu-td>
-                </mu-tr>
-                <!---审核通过-->
-                <mu-dialog :open="accept" title="审核通过" @close="accept = false">
-                  是否通过？
-                  <mu-flat-button slot="actions" @click="accept = false" primary label="取消"/>
-                  <mu-flat-button slot="actions" primary @click="accept = false" label="确定"/>
-                </mu-dialog>
-                <!---审核驳回-->
-                <mu-dialog :open="reject" title="审核驳回" @close="reject = false">
-                  是否驳回
-                  <mu-flat-button slot="actions" @click="reject = false" primary label="取消"/>
-                  <mu-flat-button slot="actions" primary @click="reject = false" label="确定"/>
-                </mu-dialog>
-              </mu-tbody>
-            </mu-table>
+              </mu-tr>
+            </mu-thead>
+            <mu-tbody>
+              <mu-tr v-for="(item,index) in tableData" :key="index" :selected="item.selected" v-if="comSearch(item)">
+                <mu-td>{{ item.orderId}}</mu-td>
+                <mu-td>{{item.orderType}}</mu-td>
+                <mu-td>
+                  <div class="sst">{{item.startTime}}</div>
+                </mu-td>
+                <mu-td>
+                  <div class="sst">{{item.endTime}}</div>
+                </mu-td>
+                <mu-td>{{item.fromCity}}</mu-td>
+                <mu-td>{{item.destCity}}</mu-td>
+                <mu-td>{{item.userName}}</mu-td>
+                <mu-td>{{item.price}}</mu-td>
+                <mu-td>{{item.status}}</mu-td>
+                <mu-td>
+                  <mu-raised-button label="查看详情" @click="$router.push('/home/order_details')"/>
+                  <br/>
+                  <mu-raised-button label="通过" @click="tmpNowCheckItem(item, 1)"/>
+                  <!--@click="accept = true"-->
+                  <br/>
+                  <mu-raised-button label="驳回" @click="tmpNowCheckItem(item, 2)"/>
+                  <!--@click="reject = true"-->
+                </mu-td>
+              </mu-tr>
+              <!---审核通过-->
+              <mu-dialog :open="accept" title="审核通过" @close="accept = false">
+                是否通过？
+                <mu-flat-button slot="actions" @click="accept = false" primary label="取消"/>
+                <mu-flat-button slot="actions" primary @click="checkOrder" label="确定"/>
+              </mu-dialog>
+              <!---审核驳回-->
+              <mu-dialog :open="reject" title="审核驳回" @close="reject = false">
+                是否驳回
+                <mu-flat-button slot="actions" @click="reject = false" primary label="取消"/>
+                <mu-flat-button slot="actions" primary @click="checkOrder" label="确定"/>
+              </mu-dialog>
+            </mu-tbody>
+          </mu-table>
 
-          </div>
         </div>
       </div>
-
+    </div>
 
 
   </div>
@@ -98,34 +105,19 @@
         reject: false,
         value: '1',
         tableData: [
-          {
-            approval_ID:'134542213',
-            type: '机票',
-            start_time: '2017-01-02',
-            end_time: '2017-02-01',
-            start_city: '成都',
-            dest_city: '上海',
-            user: '张三',
-            price: '2000',
-            state:'审核通过',
-            operation:''
-
-          },
-          {
-            approval_ID:'134542215',
-            type: '酒店',
-            start_time: '2017-01-02 ',
-            end_time: '2017-02-01 ',
-            start_city: '成都',
-            dest_city: '上海',
-            user: '张三',
-            price: '400',
-            state:'审核不通过',
-            operation:''
-
-          },
-
-
+          // {
+          //   "orderId": "201805150909441",
+          //   "startTime": "20180520",
+          //   "endTime": "20180520",
+          //   "userId": 9,
+          //   "userName": "handsome",
+          //   "orderType": "机票",
+          //   "orderTime": "2018-05-15 09:06:20",
+          //   "price": 516,
+          //   "status": "待支付",
+          //   "fromCity": "成都",
+          //   "destCity": "上海"
+          // }
         ],
         fixedHeader: true,
         fixedFooter: false,
@@ -133,23 +125,87 @@
         multiSelectable: true,
         enableSelectAll: false,
         showCheckbox: false,
-        height: '300px'
+        height: '300px',
+        // 搜索关键字
+        orderSearchKey: "",
+        nameSearchKey: "",
+        // 审批缓存
+        tmpCheckItem: null,
+        tmpCheckType: ""
       }
+    },
+    created() {
+      // 获取订单列表
+      this.getOrderList()
     },
     methods: {
       handleChange(value) {
         this.value = value
       },
-      unselect () {
+      unselect() {
         this.$refs.table.unSelectAll()
       },
-      open () {
+      open() {
         this.dialog = true
       },
-      close () {
+      close() {
         this.dialog = false
+      },
+      // 获取订单
+      getOrderList() {
+        this.$axios.post('/admin/searchReviewOrder', {}).then((res) => {
+          this.tableData = res.data.data.reviewOrderDTOList
+        })
+      },
+      // 计算搜索
+      comSearch(item) {
+        return (item.orderId.indexOf(this.orderSearchKey) > -1 && item.userName.indexOf(this.nameSearchKey) > -1)
+      },
+      // 缓存当前审批项目
+      tmpNowCheckItem(item, type) {
+        this.tmpCheckItem = item
+        this.tmpCheckType = type
+        if (this.tmpCheckType == 1) {
+          this.accept = true
+        }else if (this.tmpCheckType == 2) {
+          this.reject = true
+        }
+      },
+      // 审批订单
+      checkOrder() {
+        // 判断订单类型
+        if (this.tmpCheckItem.orderType == "机票") {
+          this.$axios.post('/admin/updateAirTicketOrder', {
+            orderId: this.tmpCheckItem.orderId,
+            status: this.tmpCheckType
+          }).then((res) => {
+            this.getOrderList()
+            if (this.tmpCheckType == 1) {
+              this.accept = false
+            }else if (this.tmpCheckType == 2) {
+              this.reject = false
+            }
+          }).catch((error) => {
+            // 异常
+            alert(error.toString())
+          })
+        }else if (this.tmpCheckItem.orderType == "酒店") {
+          this.$axios.post('/admin/updateHotelOrder', {
+            orderId: this.tmpCheckItem.orderId,
+            status: this.tmpCheckType
+          }).then((res) => {
+            this.getOrderList()
+            if (this.tmpCheckType == 1) {
+              this.accept = false
+            }else if (this.tmpCheckType == 2) {
+              this.reject = false
+            }
+          }).catch((error) => {
+            // 异常
+            alert(error.toString())
+          })
+        }
       }
-
     }
 
   }
@@ -164,7 +220,8 @@
       .mu-breadcrumb-item-link {
         color: white;
         margin: 10px;
-      }}
+      }
+    }
     .menu {
       float: left;
       display: inline-block;
@@ -224,13 +281,16 @@
 
     }
 
-
     .demo-menu {
       display: inline-block;
       margin: 10px 50px 0 0;
       width: 168px;
     }
-
+    .mu-td {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
 
