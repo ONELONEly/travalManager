@@ -55,7 +55,6 @@
                     <mu-th tooltip="department">所属部门</mu-th>
                     <mu-th tooltip="leval">差旅级别</mu-th>
                     <mu-th tooltip="user_phone">手机</mu-th>
-                    <mu-th tooltip="user_passcard">身份证号</mu-th>
                     <mu-th tooltip="user_email">邮箱</mu-th>
                     <mu-th tooltip="operation">操作</mu-th>
 
@@ -63,16 +62,15 @@
                   </mu-tr>
                 </mu-thead>
                 <mu-tbody>
-                  <mu-tr v-for="item,index in tableData" :key="index" :selected="item.selected">
-                    <mu-td>{{item.user_ID}}</mu-td>
-                    <mu-td>{{item.user_password}}</mu-td>
-                    <mu-td>{{item.user_name}}</mu-td>
-                    <mu-td>{{item.user_sex}}</mu-td>
-                    <mu-td>{{item.department}}</mu-td>
-                    <mu-td>{{item.leval}}</mu-td>
-                    <mu-td>{{item.user_phone}}</mu-td>
-                    <mu-td>{{item.user_passcard}}</mu-td>
-                    <mu-td class="email">{{item.user_email}}</mu-td>
+                  <mu-tr v-for="(item,index) in tableData" :key="index" :selected="item.selected">
+                    <mu-td>{{item.id}}</mu-td>
+                    <mu-td>{{item.password}}</mu-td>
+                    <mu-td>{{item.desc}}</mu-td>
+                    <mu-td>{{item.sex}}</mu-td>
+                    <mu-td>{{item.dept}}</mu-td>
+                    <mu-td>{{item.special}}</mu-td>
+                    <mu-td>{{item.phone}}</mu-td>
+                    <mu-td class="email">{{item.email}}</mu-td>
                     <mu-td>
                       <mu-raised-button label="编辑" @click="edit_user = true"/>
                       <br/>
@@ -138,20 +136,20 @@
                   <mu-dialog :open="add_user" title="添加员工" @close="delete_user=false">
                     <mu-row gutter>
                       <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">员工用户名：</mu-col>
-                      <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="uersh12334"/><br/></mu-col>
+                      <mu-col width="80" tablet="80" desktop="80"><mu-text-field v-model="staffdesc"/><br/></mu-col>
                     </mu-row>
                     <mu-row gutter>
                       <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">密码：</mu-col>
-                      <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="12334"/><br/></mu-col>
+                      <mu-col width="80" tablet="80" desktop="80"><mu-text-field v-model="staffpassword"/><br/></mu-col>
                     </mu-row>
                     <mu-row gutter>
                       <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">员工姓名：</mu-col>
-                      <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="张小龙"/><br/></mu-col>
+                      <mu-col width="80" tablet="80" desktop="80"><mu-text-field :v-model="staffdsca"/><br/></mu-col>
                     </mu-row>
                     <mu-row gutter>
                       <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">性别：</mu-col>
-                      <mu-col width="80" tablet="80" desktop="80"> <mu-radio label="男" name="group" nativeValue="simple1" v-model="sex_value1" class="demo-radio"/>
-                        <mu-radio label="女" name="group" nativeValue="simple2" v-model="sex_value1"  class="demo-radio"/> <br/>
+                      <mu-col width="80" tablet="80" desktop="80"> <mu-radio label="男" name="group" nativeValue="simple1" v-model="staffsex" class="demo-radio"/>
+                        <mu-radio label="女" name="group" nativeValue="simple2" v-model="staffsex"  class="demo-radio"/> <br/>
                       </mu-col>
                     </mu-row>
 
@@ -179,19 +177,19 @@
 
                     <mu-row gutter>
                       <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">手机：</mu-col>
-                      <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="122343544334"/><br/></mu-col>
+                      <mu-col width="80" tablet="80" desktop="80"><mu-text-field v-model="staffphone"/><br/></mu-col>
                     </mu-row>
                     <mu-row gutter>
                       <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">身份证号：</mu-col>
-                      <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="12234334334"/><br/></mu-col>
+                      <mu-col width="80" tablet="80" desktop="80"><mu-text-field /><br/></mu-col>
                     </mu-row>
                     <mu-row gutter>
                       <mu-col width="20" tablet="20" desktop="20" style="font-size: 16px;height: 50px;line-height: 50px">邮箱：</mu-col>
-                      <mu-col width="80" tablet="80" desktop="80"><mu-text-field hintText="12344542423"/><br/></mu-col>
+                      <mu-col width="80" tablet="80" desktop="80"><mu-text-field v-model="staffemail"/><br/></mu-col>
                     </mu-row>
 
                     <mu-flat-button slot="actions" @click="add_user=false" primary label="取消"/>
-                    <mu-flat-button slot="actions" primary @click="add_user=false" label="确定"/>
+                    <mu-flat-button slot="actions" primary @click="insertUser" label="确定"/>
                   </mu-dialog>
 
                 </mu-tbody>
@@ -392,34 +390,19 @@
         activeTab: 'tab1',
         product_search_tab_select: 'department',
         tableData: [
-          {
-            user_ID: '2139812',
-            user_password:'334321',
-            user_name: '张晓梅',
-            user_sex: '女',
-            department: '销售部',
-            leval: '普通员工',
-            user_phone: '66778993',
-            user_passcard:233243423,
-            user_email: 'zxm@company.cn',
-            operation: ''
-
-          },
-          {
-            user_ID: '2139813',
-            user_password:'334321',
-            user_name: '张聪',
-            user_sex: '男',
-            department: '技术部',
-            leval: '主管级别',
-            user_phone: '66898993',
-            user_passcard:242345456,
-            user_email: 'zc@company.cn',
-            operation: ''
-
-          },
-
-
+          // {
+          //   dept:"100",
+          //   desc:"jinyu",
+          //   dsca:"王艺锦",
+          //   email:"jinyuk@foxmail.com",
+          //   id:1,
+          //   menus:null,
+          //   number: null,
+          //   password:"jinyu_kelly",
+          //   phone:"18180462305",
+          //   sex:"男",
+          //   special:1
+          // }
         ],
         fixedHeader: true,
         fixedFooter: false,
@@ -427,8 +410,23 @@
         multiSelectable: true,
         enableSelectAll: false,
         showCheckbox: false,
-        height: '300px'
+        height: '300px',
+        staffdept:"100",
+        staffdesc:"",
+        staffdsca:"",
+        staffemail:"",
+        staffid:14,
+        staffmenus:null,
+        staffnumber: null,
+        staffpassword:"",
+        staffphone:"",
+        staffsex:"",
+        staffspecial:1
       }
+    },
+    created() {
+      // 获取所有用户
+      this.queryAllUser()
     },
     methods: {
       handleChange_department1(value) {
@@ -461,7 +459,6 @@
         this.fly_leval_manager = value
 
       },
-
       handleTabChange(val) {
         this.activeTab = val
       },
@@ -470,8 +467,31 @@
       },
       unselect() {
         this.$refs.table.unSelectAll()
+      },
+      // 获取所有用户
+      queryAllUser() {
+        this.$http.post('/user/queryAllUser',this.$qs.stringify({page:1,limit:20})).then((res) =>{
+          this.tableData = res.data.data
+        });
+      },
+      insertUser() {
+        this.tableData.push(
+          {
+            dept:this.staffdept,
+            desc:this.staffdesc,
+            dsca:this.staffdsca,
+            email:this.staffemail,
+            id:this.staffid,
+            menus:this.staffmenus,
+            number: this.staffnumber,
+            password:this.staffpassword,
+            phone:this.staffphone,
+            sex:this.staffsex,
+            special:this.staffspecial
+          }
+        )
+        this.add_user = false
       }
-
     }
 
 
