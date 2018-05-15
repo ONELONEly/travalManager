@@ -42,6 +42,7 @@
             this.$router.push('/');
           }else {
             this.$store.commit('setLoginUser', res.data.data);
+            this.isManager = this.$store.state.user.loginUser.isManager;
             if (this.$store.state.user.loginUser.isManager){
               this.$router.push("/home/approval");
             }else {
